@@ -10,10 +10,10 @@
 #import "Tile.h"
 #import "ElevatorTile.h"
 #import "SwitchTile.h"
-#import "Sprite.h"
-#import "World.h"
+#import "Entity.h"
+#import "Enemy.h"
 
-typedef struct spStruct {
+typedef struct sSwitchParameters {
     SwitchState state;
     int* targetTileIndexes;	// Array with indexes of target tiles in tilesLayer array
 	int targetTilesCount;	// Number of elements in targetTileIndexes array
@@ -35,14 +35,14 @@ typedef struct spStruct {
 @property int worldTileHeight;
 @property (readonly) int worldTileCount;
 
-- (Tile**) getTilesData:(World*)world progressCallback:(ProgressCallback)callback;
+- (Tile**) getTilesData:(World*)world progressCallback:(Callback)callback;
 - (SwitchParameters*) defineSwitches;
-- (Sprite**) getEnemyData:(World*)world;
-- (void) invokeProgressCallback:(ProgressCallback)callback percentage:(int)p;
+- (Entity**) getEnemyData:(World*)world;
+- (void) invokeProgressCallback:(Callback)callback percentage:(int)p;
 - (Tile**) createTilesLayer:(World*)world 
 				physicsData:(int[SCREEN_WORLD_HEIGHT / TILE_HEIGHT][SCREEN_WIDTH / TILE_WIDTH])pData 
 				drawingData:(int[SCREEN_WORLD_HEIGHT / TILE_HEIGHT][SCREEN_WIDTH / TILE_WIDTH])dData
 			 switchesParams:(SwitchParameters*)sParams
-		   progressCallback:(ProgressCallback)callback;
+		   progressCallback:(Callback)callback;
 
 @end

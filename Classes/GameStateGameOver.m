@@ -14,7 +14,7 @@
 
 - (GameStateGameOver*) initWithFrame:(CGRect)frame andManager:(GameStateManager*)manager
 {
-	if (self = [super initWithFrame:frame andManager:manager]) 
+	if ((self = [super initWithFrame:frame andManager:manager]))
 	{
 	}
 	return self;

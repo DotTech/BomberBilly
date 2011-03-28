@@ -9,11 +9,7 @@
 #import "World.h"
 #import "Enemy.h"
 #import "Level.h"
-#import "DebugLevel.h"
-#import "DebugElevators.h"
-#import "DebugTileDetection.h"
-#import "LevelOne.h"
-#import "LevelTwo.h"
+#import "ImportLevels.h"
 #import "ResourceManager.h"
 
 @implementation World
@@ -34,13 +30,17 @@
 	// Initialize all available levels
 	// This does not create any of the level's game objects yet, 
 	// which is done in [self loadLevel] when the level becomes active
+    // First element in levels MUST be the tutorial level!
 	levels = new Level*[NUMBER_OF_LEVELS];
-	levels[0] = [[DebugLevel alloc] init];
-	levels[1] = [[LevelOne alloc] init];
-	levels[2] = [[LevelTwo alloc] init];
-	
+	levels[0] = [[DebugTileDetection alloc] init];
+	levels[1] = [[TutorialLevel alloc] init];
+	levels[2] = [[LevelOne alloc] init];
+	levels[3] = [[LevelTwo alloc] init];
+    levels[4] = [[LevelThree alloc] init];
+    
 	// Debug levels
-	//levels[1] = [[DebugElevators alloc] init];
+	//levels[2] = [[DebugElevators alloc] init];
+    //levels[2] = [[DebugLevel alloc] init];
 	
 	return self;
 }
@@ -59,7 +59,7 @@
 #pragma mark -
 #pragma mark Initialization of world objects
 
-- (void) loadLevel:(int)index progressCallback:(ProgressCallback)callback
+- (void) loadLevel:(int)index progressCallback:(Callback)callback
 {
 	CLog();
 	releaseObjectArray(tilesLayer, self.currentLevel.worldTileCount);
@@ -67,7 +67,8 @@
 	
 	// Invoke callback and pass the loading progress percentage 
 	[callback.callbackObject performSelector:callback.callbackMethod withObject:[NSNumber numberWithInt:0]];
-	
+    
+    // Allocate and initialize level tiles and enemies
 	currentLevelIndex = index;
 	tilesLayer = [self.currentLevel getTilesData:self progressCallback:callback];
 	enemies = [self.currentLevel getEnemyData:self];
@@ -77,11 +78,6 @@
 - (Level*) currentLevel
 {
 	CLogGL();
-	
-	#if DEBUG_TILE_DETECTION
-	return [[DebugTileDetection alloc] init];
-	#endif
-	
 	return self.levels[currentLevelIndex];
 }
 
@@ -96,6 +92,7 @@
 	
 	Sprite* s = [[Sprite alloc] initSprite:SPRITE_HERO];
 	[s.animation setSequence:ANIMATION_HERO_WALKING];
+	
 	s.offScreen = NO;
 	s.x = spriteLocation.x;
 	s.y = spriteLocation.y;
@@ -269,9 +266,7 @@
 		for (int x=0; x<SCREEN_WIDTH/TILE_WIDTH; x++) 
 		{
 			int i = CoordsToIndex(x, y);
-			if (tilesLayer[i].drawingFlag != dfDrawNothing) {
-				[tilesLayer[i] draw];
-			}
+            [tilesLayer[i] draw];
 		}
 	}
 	

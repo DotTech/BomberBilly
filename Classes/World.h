@@ -33,7 +33,7 @@ typedef enum {
 @property Level** levels;
 @property (readonly) Level* currentLevel;
 
-- (void) loadLevel:(int)index progressCallback:(ProgressCallback)callback;
+- (void) loadLevel:(int)index progressCallback:(Callback)callback;
 - (Tile*) nearestPlatform:(Sprite*)sprite inDirection:(Direction)direction;
 - (Tile**) platformsToBomb:(Sprite*)sprite;
 - (void) update:(float)gameTime;

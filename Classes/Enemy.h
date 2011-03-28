@@ -7,8 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Sprite.h"
-#import "World.h"
+#import "Entity.h"
 
 typedef enum {
 	EnemyMoving = 0,
@@ -17,19 +16,17 @@ typedef enum {
 	EnemyDead = 3
 } EnemyState;
 
-@interface Enemy : Sprite {
-	World* world;		// Reference to the gameworld is required for collision detection
-	EnemyState state;
+@interface Enemy : Entity {
 	float lastEnemyUpdateTime;
 	int fallAcceleration;
+    BOOL preventFallingOfBlocks;    // Set to true if enemy must turn around when the edge of a block is reached
+                                    // Otherwise it will just continue walking and fall down
 }
 
-@property (readwrite, assign) World* world;
 @property EnemyState state;
+@property BOOL preventFallingOfBlocks;
 
-- (BOOL) standingOnPlatform;
-- (void) move;
-- (void) fall;
+- (Enemy*) initWithWorld:(World*)w;
 - (void) die;
 
 @end

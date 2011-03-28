@@ -7,25 +7,21 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Sprite.h"
-#import "World.h"
+#import "Entity.h"
 
 typedef enum {
-	Idle = 0,
-	Falling = 1,
-	Jumping = 2,
-	Walking = 3,
-	DroppingBomb = 4,
-	Dying = 5,
-	Dead = 6,
-	ReachedFinish = 7,
-	DoneCheering = 8
+	HeroIdle = 0,
+	HeroFalling = 1,
+	HeroJumping = 2,
+	HeroWalking = 3,
+	HeroDroppingBomb = 4,
+	HeroDying = 5,
+	HeroDead = 6,
+	HeroReachedFinish = 7,
+	HeroDoneCheering = 8
 } HeroState;
 
-@interface Hero : Sprite {
-	World* world;		// Reference to the gameworld is required for collision detection
-	HeroState state;	// Tells us what our hero is doing
-	
+@interface Hero : Entity {
 	float lastHeroUpdateTime;
 	int jumpAcceleration;
 	int jumpedHeight;
@@ -34,23 +30,18 @@ typedef enum {
 	int lifes;
 }
 
-@property (readwrite, assign) World* world;
 @property HeroState state;
 @property int walkTowardsX;
 @property int bombs;
 @property int lifes;
 
-- (BOOL) standingOnPlatform;
-- (BOOL) standingOnElevator;
-- (BOOL) checkEnemyCollision;
+- (Hero*)initWithWorld:(World*)w;
 - (void) jump;
-- (void) walk;
-- (void) fall;
 - (void) dropBomb;
 - (void) die;
 - (void) cheer;
 - (void) moveSideways;
-- (BOOL) moveWithElevator:(Tile*)platform;
+- (BOOL) checkEnemyCollision;
 - (void) takeBomb:(Tile*)tile;
 
 @end

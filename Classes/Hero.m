@@ -13,18 +13,17 @@
 
 @implementation Hero
 
-@synthesize world;
-@synthesize state;
+@dynamic state;
 @synthesize walkTowardsX;
 @synthesize bombs;
 @synthesize lifes;
 
 
-- (Hero*)init
+- (Hero*)initWithWorld:(World*)w
 {
 	CLog();
 	
-	[super initSprite:SPRITE_HERO];
+	[super initSprite:SPRITE_HERO withWorld:w];
 	[self.animation setSequence:ANIMATION_HERO_IDLE];
 	
 	jumpAcceleration = HERO_JUMP_ACCELERATION;
@@ -32,7 +31,7 @@
 	walkTowardsX = -1;
 	bombs = 0;
 	lifes = 0;
-	state = Idle;
+	self.state = HeroIdle;
 	
 	return self;
 }
@@ -49,17 +48,17 @@
 	if (gameTime * 1000 > lastHeroUpdateTime + HERO_UPDATE_INTERVAL)
 	{
 		CLogGLU();
-		
+        
 		// If our hero is not on a platform or elevator it needs to start falling down
-		if (![self standingOnPlatform] && 
+		if (![self standingOnPlatform:HeroDying] && 
 			![self standingOnElevator] &&
-			(state != Jumping && state != Falling && state != Dying && state != ReachedFinish)) 
+			(self.state != HeroJumping && self.state != HeroFalling && self.state != HeroDying && self.state != HeroReachedFinish)) 
 		{
-			state = Falling;
+			self.state = HeroFalling;
 		}
 		
-		// Update hero according to its state
-		if (state != Idle) 
+		// Update hero according to its self.state
+		if (self.state != HeroIdle) 
 		{
 			[self walk];
 			[self jump];
@@ -70,142 +69,18 @@
 		}
 		
 		// Check for collision with enemies and start dying if we hit one
-		if (state != Dead && state != ReachedFinish && [self checkEnemyCollision]) {
-			state = Dying;
+		if (self.state != HeroDead && self.state != HeroReachedFinish && [self checkEnemyCollision]) {
+			self.state = HeroDying;
 		}
 		
 		// Check for animation sequences that are still active while they are not supposed to be
-		if ((state != Walking && self.animation.currentSequence == ANIMATION_HERO_WALKING) || 
-			(state != Falling && self.animation.currentSequence == ANIMATION_HERO_JUMP_HANG)) {
+		if ((self.state != HeroWalking && self.animation.currentSequence == ANIMATION_HERO_WALKING) || 
+			(self.state != HeroFalling && self.animation.currentSequence == ANIMATION_HERO_JUMP_HANG)) {
 			[self.animation setSequence:ANIMATION_HERO_IDLE];
 		}
 		
 		lastHeroUpdateTime = gameTime * 1000;
 	}
-}
-
-
-#if !DEBUG_TILE_DETECTION
-- (BOOL) standingOnPlatform
-{
-	CLogGL();
-	
-	// Find nearest platform underneath hero
-	Tile* platform = [self.world nearestPlatform:self inDirection:Down];
-	if (platform != NULL)
-	{
-		// Check if the platform underneath us is one we are allowed to stand on.
-		// Note that pfElevatorTile is not allowed since that type is handled by the standingOnElevator method
-		if (platform.physicsFlag != pfNoTile && platform.physicsFlag != pfElevatorTile && 
-			platform.physicsFlag != pfElevatorHalfTile && platform.physicsFlag != pfBombTile && 
-			platform.physicsFlag != pfSwitchTile) 
-		{
-			if (self.y == platform.y + TILE_HEIGHT)
-			{
-				if (platform.physicsFlag == pfDeadlyTile && !DEBUG_DEADLYTILES_DONT_KILL) {
-					self.state = Dying;
-				}
-				return YES;
-			}
-		}
-	}
-	return NO;
-}
-#endif
-
-
-#if DEBUG_TILE_DETECTION
-// Special version of standingOnPlatform used for tile detection debugging
-// Performs tile detection on the left, right and bottom side of the sprite 
-// and changes the animation for the detected tiles to visualize which tiles are detected
-- (BOOL) standingOnPlatform
-{
-	CLogGL();
-	
-	for (int i=0; i<10; i++) {
-		int t = [self.world CoordsToIndex:CGPointMake(i, 1)];
-		[self.world.tilesLayer[t].animation setSequence:ANIMATION_TILE_DEFAULT];
-		
-		t = [self.world CoordsToIndex:CGPointMake(i, 3)];
-		[self.world.tilesLayer[t].animation setSequence:ANIMATION_TILE_DEFAULT];
-	}
-	
-	// Detect tile underneath hero
-	Tile* platform = [self.world nearestPlatform:self inDirection:Down];
-	if (platform != NULL) {
-		[platform.animation setSequence:ANIMATION_TILE_DEBUGDETECTION];
-	}
-	
-	// Detect tile left and right from hero
-	Tile* left = [self.world DEBUG_nearestPlatform:CGPointMake(self.x, self.y + TILE_HEIGHT) inDirection:Left isFlipped:self.flipped];
-	if (left != NULL) {
-		[left.animation setSequence:ANIMATION_TILE_DEBUGDETECTION];
-	}
-	
-	Tile* right = [self.world DEBUG_nearestPlatform:CGPointMake(self.x, self.y + TILE_HEIGHT) inDirection:Right isFlipped:self.flipped];
-	if (right != NULL) {
-		[right.animation setSequence:ANIMATION_TILE_DEBUGDETECTION];
-	}
-	
-	return YES;
-}
-#endif
-
-
-- (BOOL) standingOnElevator
-{
-	CLogGL();
-	
-	// Checking for elevators is slightly different from checking for non-moving platforms
-	// Before hero update is called, elevators have already been moved
-	// So we have to check a little above and underneath the hero for elevators since it will not be standing exactly on it
-	BOOL result = NO;
-	
-	// First we check for an elevator using hero's current data row (location in tile data array)
-	Tile* platform = [self.world nearestPlatform:self inDirection:Down];
-	if (platform != NULL && [platform isKindOfClass:[ElevatorTile class]] && platform.physicsFlag == pfElevatorTile) {
-		result = [self moveWithElevator:platform];
-	}
-	
-	// The elevator was not found using the hero's current data row.
-	// Now we move hero up with the same acceleration as the elevator
-	// Then we check if this causes the data row to change
-	int initialDataRow = self.dataRow;
-	int initialY = self.y;
-
-	if (!result)
-	{
-		// Move hero up with same amount of steps as elevator
-		self.y += ELEVATOR_ACCELERATION;
-		if (self.dataRow != initialDataRow) 
-		{
-			// Check again for an elevator
-			platform = [self.world nearestPlatform:self inDirection:Down];
-			if (platform != NULL && [platform isKindOfClass:[ElevatorTile class]] && platform.physicsFlag == pfElevatorTile) {
-				result = [self moveWithElevator:platform];
-			}
-		}
-	}
-	
-	if (!result)
-	{
-		// Move hero down with same amount of steps as elevator
-		self.y = initialY - ELEVATOR_ACCELERATION;
-		if (self.dataRow != initialDataRow) 
-		{
-			// Check again for an elevator
-			platform = [self.world nearestPlatform:self inDirection:Down];
-			if (platform != NULL && [platform isKindOfClass:[ElevatorTile class]] && platform.physicsFlag == pfElevatorTile) {
-				result = [self moveWithElevator:platform];
-			}
-		}
-	}
-	
-	if (!result) {
-		self.y = initialY;
-	}
-	
-	return result;	
 }
 
 
@@ -244,7 +119,7 @@
 {
 	CLogGL();
 	
-	if (state == Walking)
+	if (self.state == HeroWalking)
 	{
 		CLogGLU();
 		
@@ -260,7 +135,7 @@
 		// If hero is standing on a jumping platform, start jumping
 		Tile* platform = [self.world nearestPlatform:self inDirection:Down];
 		if (platform.physicsFlag == pfJumpTile) {
-			self.state = Jumping;
+			self.state = HeroJumping;
 			return;
 		}
 		
@@ -279,7 +154,7 @@
 {
 	CLogGL();
 	
-	if (state == Jumping)
+	if (self.state == HeroJumping)
 	{
 		CLogGLU();
 		
@@ -289,12 +164,16 @@
 		
 		// Find nearest platform above hero
 		Tile* platform = [self.world nearestPlatform:self inDirection:Up];
-		BOOL hitCeiling = (platform != NULL && platform.physicsFlag != pfNoTile && platform.physicsFlag != pfSwitchTile 
-						   && self.y + jumpAcceleration >= platform.y);
+        
+        // Define which tiles are blocking
+        BOOL blockingPlatform = platform != NULL && (platform.physicsFlag == pfDeadlyTile || platform.physicsFlag == pfDestructibleTile || 
+                                                     platform.physicsFlag == pfIndestructibleTile || platform.physicsFlag == pfJumpTile);
+
+        BOOL hitCeiling = (blockingPlatform && self.y + jumpAcceleration >= platform.y);
 		
 		// Start falling down if ceiling is hit or maximum jump height was reached
 		if (hitCeiling || jumpedHeight >= HERO_JUMP_MAXHEIGHT) {
-			state = Falling;
+			self.state = HeroFalling;
 		}
 		else
 		{
@@ -317,7 +196,7 @@
 {
 	CLogGL();
 	
-	if (state == Falling)
+	if (self.state == HeroFalling)
 	{
 		CLogGLU();
 		
@@ -361,11 +240,11 @@
 				}
 				else if (platform.physicsFlag == pfDeadlyTile && !DEBUG_DEADLYTILES_DONT_KILL) {
 					// We hit a deadly tile, kill hero
-					self.state = Dying;
+					self.state = HeroDying;
 					self.y = platformY;
 				}
 				else if (platform.physicsFlag == pfFinishTile) {
-					self.state = ReachedFinish;
+					self.state = HeroReachedFinish;
 					self.y = platformY;
 				}
 				else 
@@ -375,7 +254,7 @@
 					jumpAcceleration = HERO_JUMP_ACCELERATION;
 					self.y = platformY;
 					
-					state = Idle;
+					self.state = HeroIdle;
 					[self.animation setSequence:ANIMATION_HERO_IDLE];
 				}
 			}
@@ -383,7 +262,7 @@
 			{
 				// We fell off the screen
 				self.y = SCREEN_HEIGHT - SCREEN_WORLD_HEIGHT;
-				self.state = Dying;
+				self.state = HeroDying;
 			}
 		}
 		
@@ -402,7 +281,7 @@
 {
 	CLogGL();
 	
-	if (state == ReachedFinish)
+	if (self.state == HeroReachedFinish)
 	{
 		CLogGLU();
 		
@@ -411,7 +290,7 @@
 		}
 		
 		if ([self.animation get].animationEnded) {
-			state = DoneCheering;
+			self.state = HeroDoneCheering;
 		}
 	}
 }
@@ -453,7 +332,7 @@
 			return;
 		}
 		
-		// See what kind of platform we're hitting and update hero's state
+		// See what kind of platform we're hitting and update hero's self.state
 		// Maybe move this part to a seperate method as it's also used during "fall" in slightly different manner
 		if (!hittingPlatform || platform.physicsFlag == pfNoTile) {
 			// Not hitting anything
@@ -466,7 +345,7 @@
 		}
 		else if (platform.physicsFlag == pfDeadlyTile && !DEBUG_DEADLYTILES_DONT_KILL) {
 			// Hitting something deadly
-			self.state = Dying;
+			self.state = HeroDying;
 		}			
 		else if (platform.physicsFlag == pfBombTile) {
 			// Hitting a bomb, add it to inventory
@@ -475,36 +354,10 @@
 		}
 		else if (platform.physicsFlag == pfFinishTile) {
 			// Reached the finish of the level
-			self.state = ReachedFinish;
+			self.state = HeroReachedFinish;
 			self.x += addToX;
 		}
 	}
-}
-
-
-// If hero is standing on an elevator it needs to be moved either up or down
-// Returns bool indication wether hero is on elevator or not
-- (BOOL) moveWithElevator:(Tile*)platform
-{
-	CLogGL();
-	
-	ElevatorTile* elevator = (ElevatorTile*)platform;
-	if (elevator.state == ElevatorMovingUp && self.y + ELEVATOR_ACCELERATION == elevator.y + TILE_HEIGHT) {
-		CLogGLU();
-		self.y += ELEVATOR_ACCELERATION;
-		return YES;
-	}
-	else if (elevator.state == ElevatorMovingDown && self.y - ELEVATOR_ACCELERATION == elevator.y + TILE_HEIGHT) {
-		CLogGLU();
-		self.y -= ELEVATOR_ACCELERATION;
-		return YES;
-	}
-	else if (self.y == elevator.y + TILE_HEIGHT) {
-		CLogGLU();
-		return YES;
-	}
-	
-	return NO;
 }
 
 
@@ -516,7 +369,7 @@
 {
 	CLogGL();
 	
-	if (state == DroppingBomb && bombs > 0)
+	if (self.state == HeroDroppingBomb && bombs > 0)
 	{
 		CLogGLU();
 		
@@ -537,7 +390,7 @@
 			bombs--;
 		}
 		
-		state = Idle;
+		self.state = HeroIdle;
 	}
 }
 
@@ -558,7 +411,7 @@
 {
 	CLogGL();
 	
-	if (state == Dying)
+	if (self.state == HeroDying)
 	{
 		CLogGLU();
 		
@@ -567,10 +420,23 @@
 		}
 		
 		if ([self.animation get].animationEnded) {
-			state = Dead;
+			self.state = HeroDead;
 		}
 	}
 }
 
+
+#pragma mark -
+#pragma mark Properties
+
+- (HeroState) getState
+{
+    return (HeroState)super.state;
+}
+
+- (void) setState:(HeroState)s
+{
+    super.state = s;
+}
 
 @end

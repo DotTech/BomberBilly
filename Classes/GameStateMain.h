@@ -20,7 +20,7 @@
 @interface GameStateMain : GLESGameState {
 	World* world;
 	Hero* hero;
-	
+    Tile* touchedTile;
 	BOOL restarting;
 	BOOL gameOver;
 	BOOL finished;
@@ -32,8 +32,10 @@
 @property (nonatomic, retain) Hero* hero;
 
 - (void) initGameObjects:(SEL)callback;
+- (void) render:(BOOL)swapBuffer;
 - (void) loadingStatusUpdate:(NSNumber*)percentageDone;
 - (void) restartLevel:(BOOL)moveToNextLevel;
 - (void) handleHeroDeath;
+- (BOOL) blinkSwitchTarget;
 
 @end

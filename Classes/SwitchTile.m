@@ -36,6 +36,13 @@
 }
 
 
+- (void) dealloc
+{
+    [tileMarker release];
+    [super dealloc];
+}
+
+
 - (void) toggleSwitch
 {
 	CLog();
@@ -72,18 +79,20 @@
 	}
 }
 
+
 // Check if the active animation sequence matches the the switch state
 - (void) updateSequence
 {
 	CLog();
 	
-	if (self.state == SwitchOn && self.animation.currentSequence != SWITCH_SEQUENCE_ON) {
-		[self.animation setSequence:SWITCH_SEQUENCE_ON];
+	if (self.state == SwitchOn && self.animation.currentSequence != ANIMATION_SWITCH_ON) {
+		[self.animation setSequence:ANIMATION_SWITCH_ON];
 	}
 	
-	if (self.state == SwitchOff && self.animation.currentSequence != SWITCH_SEQUENCE_OFF) {
-		[self.animation setSequence:SWITCH_SEQUENCE_OFF];
+	if (self.state == SwitchOff && self.animation.currentSequence != ANIMATION_SWITCH_OFF) {
+		[self.animation setSequence:ANIMATION_SWITCH_OFF];
 	}
 }
+
 
 @end

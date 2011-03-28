@@ -8,21 +8,31 @@
 
 #import "Enemy.h"
 #import "Tile.h"
+#import "Level.h"
+
+// TODO: 
+// - Something is off with the enemy tile detection...
+//   When moving left enemy.dataColumn returns an incorrect value (it considers the sprite to be in dataColumnMin while it's not)
+// - Enemies with preventFallingOfBlocks==YES get into infinite flip when tiles underneath them are exploded
 
 @implementation Enemy
 
-@synthesize world;
-@synthesize state;
+@dynamic state;
+@synthesize preventFallingOfBlocks;
 
 
-- (Enemy*)init
+- (Enemy*) initWithWorld:(World*)w
 {
 	CLog();
-	[super initSprite:SPRITE_ENEMIES];
+    
+	[super initSprite:SPRITE_ENEMIES withWorld:w];
 	[self.animation setSequence:ANIMATION_ENEMY_DEVILCAR];
 	
-	fallAcceleration = 1;
-	
+    offScreen = NO;
+    fallAcceleration = 1;
+    preventFallingOfBlocks = NO;
+	self.state = EnemyFalling;
+    
 	return self;
 }
 
@@ -40,11 +50,20 @@
 		CLogGLU();
 		
 		// If enemy is not on a platform it needs to start falling down
-		if (![self standingOnPlatform] && (state != EnemyFalling && state != EnemyDying && state != EnemyDead)) {
-			state = EnemyFalling;
+		if (![self standingOnPlatform:EnemyDying] && 
+            ![self standingOnElevator] &&
+            (self.state != EnemyFalling && self.state != EnemyDying && self.state != EnemyDead)) 
+        {
+            if (self.state == EnemyMoving && preventFallingOfBlocks) {
+                // Turn around when enemy is walking and the edge of a row of blocks is reached
+                self.flipped = !self.flipped;
+            }
+            else {
+                self.state = EnemyFalling;
+            }
 		}
 		
-		[self move];
+		[self walk];
 		[self fall];
 		[self die];
 		
@@ -53,34 +72,10 @@
 }
 
 
-- (BOOL) standingOnPlatform
-{
-	CLogGL();
-	
-	// Find nearest platform underneath enemy
-	Tile* platform = [self.world nearestPlatform:self inDirection:Down];
-	if (platform != NULL)
-	{
-		// Check if found platform is one that we can stand on
-		if (platform.physicsFlag != pfNoTile && platform.physicsFlag != pfElevatorTile && platform.physicsFlag != pfElevatorHalfTile 
-			&& self.y == platform.y + TILE_HEIGHT) 
-		{
-			if (platform.physicsFlag == pfDeadlyTile) {
-				self.state = EnemyDying;
-			}
-			return YES;
-		}
-	}
-	return NO;
-}
-
-
 #pragma mark -
 #pragma mark Enemy movement
 
-// TODO: Something is off with the enemy tile detection...
-// When moving left enemy.dataColumn returns an incorrect value (it considers the sprite to be in dataColumnMin while it's not)
-- (void) move
+- (void) walk
 {
 	CLogGL();
 	
@@ -92,11 +87,13 @@
 		CLogGLU();
 		
 		int widthOffset = self.animation.sequenceWidth / 2;
-		
 		Tile* platform = [self.world nearestPlatform:self inDirection:(self.flipped ? Left : Right)];
-		BOOL blockingPlatform = !(platform == NULL || platform.physicsFlag == pfNoTile || platform.physicsFlag == pfElevatorTile 
-												   || platform.physicsFlag == pfElevatorHalfTile || platform.physicsFlag == pfBombTile);
-		
+        
+        // Define which tiles are blocking
+        BOOL blockingPlatform = platform != NULL && (platform.physicsFlag == pfDeadlyTile || platform.physicsFlag == pfDestructibleTile || 
+                                                     platform.physicsFlag == pfIndestructibleTile || platform.physicsFlag == pfJumpTile ||
+                                                     platform.physicsFlag == pfElevatorTile || platform.physicsFlag == pfElevatorHalfTile);
+        
 		// Found a platform that can block our way. Check if it's in blocking range
 		if (!self.flipped) {
 			// Moving to the right
@@ -133,8 +130,12 @@
 		Tile* platform = [self.world nearestPlatform:self inDirection:Down];
 		int platformY = SCREEN_HEIGHT - SCREEN_WORLD_HEIGHT - TILE_HEIGHT;
 		
-		if (platform != NULL && platform.physicsFlag != pfNoTile && platform.physicsFlag != pfElevatorTile && 
-			platform.physicsFlag != pfElevatorHalfTile && platform.physicsFlag != pfSwitchTile) 
+        // Define which tiles are blocking
+        BOOL blockingPlatform = platform != NULL && (platform.physicsFlag == pfDeadlyTile || platform.physicsFlag == pfDestructibleTile || 
+                                                     platform.physicsFlag == pfIndestructibleTile || platform.physicsFlag == pfJumpTile ||
+                                                     platform.physicsFlag == pfElevatorTile);
+
+        if (blockingPlatform)
 		{
 			platformY = platform.y + TILE_HEIGHT;
 		}
@@ -193,4 +194,19 @@
 		}
 	}
 }
+
+
+#pragma mark -
+#pragma mark Properties
+
+- (EnemyState) getState
+{
+    return (EnemyState)super.state;
+}
+
+- (void) setState:(EnemyState)s
+{
+    super.state = s;
+}
+
 @end

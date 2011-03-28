@@ -32,6 +32,13 @@
 }
 
 
+- (void) dealloc
+{
+    [world release];
+    [super dealloc];
+}
+
+
 - (void) resetAnimation
 {
 	CLogGL();
@@ -56,8 +63,9 @@
 		if (gameTime * 1000 > lastElevatorUpdate + ELEVATOR_UPDATE_INTERVAL) 
 		{
 			CLogGLU();
+            
 			[self move:gameTime];
-			lastElevatorUpdate = gameTime * 1000;
+            lastElevatorUpdate = gameTime * 1000;
 		}
 	}
 }
@@ -66,7 +74,18 @@
 - (void) switchCallback:(BOOL)stateIsOn
 {
 	CLog();
-	self.state = stateIsOn ? ElevatorMovingUp : ElevatorPaused;
+    
+    [self startTileBlinking:NO];
+    [NSTimer scheduledTimerWithTimeInterval:SWITCH_TARGETMARKER_DURATION target:self selector:@selector(stopTileBlinking) userInfo:nil repeats:NO];
+}
+
+
+- (void) executeSwitchAction
+{
+	CLog();
+    
+    [super executeSwitchAction];
+	self.state = ElevatorMovingUp;
 }
 
 
@@ -165,23 +184,34 @@
 	{
 		CLogGLU();
 		
+        // Maximum Y position for elevators
+   		int maxY = SCREEN_HEIGHT - (TILE_HEIGHT * 2);
+        
 		// Check if we are not going to hit a tile above the elevator
-		int newDataRow = floor((double)(SCREEN_HEIGHT - 1 - (self.y + ELEVATOR_ACCELERATION + TILE_HEIGHT)) / TILE_HEIGHT);
-		int newIndex = CoordsToIndex(self.dataColumn, newDataRow);
-		int maxY = SCREEN_HEIGHT - (TILE_HEIGHT * 2);
-		
-		if (self.y + ELEVATOR_ACCELERATION < maxY &&
-			(self.world.tilesLayer[newIndex].physicsFlag == pfNoTile || self.world.tilesLayer[newIndex].physicsFlag == pfElevatorHalfTile)) 
-		{
+        // We actually check one row above the row that is directly above the elevator, 
+        // cause we want to keep one row of free space between the elevator and the ceiling
+		int newDataRow = floor((double)(SCREEN_HEIGHT - (self.y + ELEVATOR_ACCELERATION + TILE_HEIGHT)) / TILE_HEIGHT);
+		int indexToCheck = CoordsToIndex(self.dataColumn, newDataRow - 1);
+        Tile* tileAtNewIndex = self.world.tilesLayer[indexToCheck];
+        
+        // Check if tile at new index is a blocking tile
+        BOOL isBlockingTile = tileAtNewIndex != NULL && 
+                              (tileAtNewIndex.physicsFlag == pfDeadlyTile || tileAtNewIndex.physicsFlag == pfDestructibleTile || 
+                               tileAtNewIndex.physicsFlag == pfIndestructibleTile || tileAtNewIndex.physicsFlag == pfJumpTile ||
+                               tileAtNewIndex.physicsFlag == pfElevatorTile);
+        
+		if (self.y + ELEVATOR_ACCELERATION < maxY && !isBlockingTile) {
 			self.y += ELEVATOR_ACCELERATION;
 		}
-		else {
+		else 
+        {
 			self.state = ElevatorWaitingForDown;
 			if (self.y + ELEVATOR_ACCELERATION >= maxY) {
 				self.y = maxY;
 			}
 			else {
-				self.y = self.world.tilesLayer[newIndex].y - TILE_HEIGHT;
+                int moveToIndex = CoordsToIndex(self.dataColumn, newDataRow);
+				self.y = self.world.tilesLayer[moveToIndex].y - TILE_HEIGHT;
 			}
 			waitingStartTime = gameTime;
 		}

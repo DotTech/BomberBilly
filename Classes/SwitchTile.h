@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Sprite.h"
 #import "Tile.h"
 #import "World.h"
 
@@ -27,6 +28,7 @@ typedef enum {
 
 @interface SwitchTile : Tile {
 	Tile** targets;
+    Sprite* tileMarker;
 	SwitchState state;
 	BOOL hasBeenSwitched;
 	int targetsCount;

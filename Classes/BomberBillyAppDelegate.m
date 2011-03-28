@@ -10,6 +10,7 @@
 #import "BomberBillyViewController.h"
 #import "GameStateMain.h"
 #import "GameStateGameOver.h"
+#import "GameStateTutorial.h"
 
 @implementation BomberBillyAppDelegate
 
@@ -29,7 +30,7 @@
 	[NSTimer scheduledTimerWithTimeInterval:GAMELOOP_INTERVAL target:self selector:@selector(gameLoop) userInfo:nil repeats:NO];
 	
 	// Create instance of first GameState
-	[self changeGameState:[GameStateMain class]];
+	[self changeGameState:[GameStateTutorial class]];
 }
 
 - (void) gameLoop

@@ -34,7 +34,7 @@
 - (Tile**) createTilesLayer:(World*)world  physicsData:(int[SCREEN_WORLD_HEIGHT / TILE_HEIGHT][SCREEN_WIDTH / TILE_WIDTH])pData 
 										   drawingData:(int[SCREEN_WORLD_HEIGHT / TILE_HEIGHT][SCREEN_WIDTH / TILE_WIDTH])dData
 										switchesParams:(SwitchParameters*)sParams
-									  progressCallback:(ProgressCallback)callback
+									  progressCallback:(Callback)callback
 {
 	CLog();
 	Tile** tilesLayer = new Tile*[worldSize];
@@ -68,7 +68,7 @@
 					// Create common tile
 					tilesLayer[tileIndex] = [[ElevatorTile alloc] initElevator:dFlag physicsFlag:pFlag position:drawPosition setState:ElevatorMovingUp worldPointer:world];
 				}
-				else if (loop == 1 && pFlag == pfSwitchTile) 
+				else if (loop == 1 && pFlag == pfSwitchTile && sParams != NULL) 
 				{
 					// Create switch tile
 					SwitchParameters params = sParams[switchCounter];
@@ -99,14 +99,14 @@
 }
 
 
-- (Tile**) getTilesData:(World*)world progressCallback:(ProgressCallback)callback
+- (Tile**) getTilesData:(World*)world progressCallback:(Callback)callback
 {
 	CLog();
 	return NULL;
 }
 
 
-- (Sprite**) getEnemyData:(World*)world
+- (Entity**) getEnemyData:(World*)world
 {
 	CLog();
 	enemyCount = 0;
@@ -121,7 +121,7 @@
 }
 
 
-- (void) invokeProgressCallback:(ProgressCallback)callback percentage:(int)p
+- (void) invokeProgressCallback:(Callback)callback percentage:(int)p
 {
 	[callback.callbackObject performSelector:callback.callbackMethod withObject:[NSNumber numberWithInt:p]];
 }

@@ -46,6 +46,9 @@
 }
 
 
+#pragma mark -
+#pragma mark Update & rendering
+
 - (void) draw
 {
 	CLogGL();
@@ -87,8 +90,8 @@
 	if (gameTime * 1000 > lastUpdateTime + [[animation get] getCurrentFrameTimeout]) 
 	{
 		CLogGLU();
-		lastUpdateTime = gameTime * 1000;
 		[[animation get] setNextFrame];
+		lastUpdateTime = gameTime * 1000;
 	}
 }
 

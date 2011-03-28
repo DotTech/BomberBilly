@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesStackState
+   version = "1.0">
+   <StackStates>
+      <StackState
+         stackFrameDescription = "-[FeedbackItem initFeedbackItem:activationPoint:markingPoint:]:FeedbackItem.m">
+         <expressions>
+            <expression
+               value = "self.feedback">
+            </expression>
+         </expressions>
+      </StackState>
+      <StackState
+         stackFrameDescription = "-[GameStateTutorial initGameObjects:]:GameStateTutorial.mm">
+         <expressions>
+            <expression
+               value = "feedbackItems[1]">
+            </expression>
+            <expression
+               value = "feedbackItems">
+            </expression>
+         </expressions>
+      </StackState>
+      <StackState
+         stackFrameDescription = "-[GameStateTutorial initGameObjects:]:GameStateTutorial.m">
+         <expressions>
+            <expression
+               value = "feedbackItems[0]">
+            </expression>
+         </expressions>
+      </StackState>
+      <StackState
+         stackFrameDescription = "-[GameStateTutorial defineFeedback]:GameStateTutorial.m">
+         <expressions>
+            <expression
+               value = "feedbackItems">
+            </expression>
+         </expressions>
+      </StackState>
+      <StackState
+         stackFrameDescription = "-[GameStateTutorial render]:GameStateTutorial.mm">
+         <expressions>
+            <expression
+               value = "self.activeFeedbackItem[0]">
+            </expression>
+            <expression
+               value = "feedbackItems">
+            </expression>
+            <expression
+               value = "feedbackItems[0]">
+            </expression>
+            <expression
+               value = "secondsUntilFeedbackHide">
+            </expression>
+         </expressions>
+      </StackState>
+      <StackState
+         stackFrameDescription = "-[GameStateMain initGameObjects:]:GameStateMain.mm">
+         <expressions>
+            <expression
+               value = "self.hero">
+            </expression>
+            <expression
+               value = "self.world">
+            </expression>
+            <expression
+               value = "self.world.enemies">
+            </expression>
+            <expression
+               value = "[self.world currentLevel]">
+            </expression>
+            <expression
+               value = "self.world.enemies[0]">
+            </expression>
+         </expressions>
+      </StackState>
+      <StackState
+         stackFrameDescription = "-[ElevatorTile move:]:ElevatorTile.m">
+         <expressions>
+            <expression
+               value = "floor((double)(480 - 1 - (self.y + 4 + 32)) / 32)">
+            </expression>
+            <expression
+               value = "(480-((double)self.y+36))/32">
+            </expression>
+            <expression
+               value = "[self dataRow]">
+            </expression>
+            <expression
+               value = "self.y">
+            </expression>
+            <expression
+               value = "[self dataColumn]">
+            </expression>
+            <expression
+               value = "(479-((double)self.y+36))/32">
+            </expression>
+         </expressions>
+      </StackState>
+      <StackState
+         stackFrameDescription = "-[GameStateTutorial drawFeedbackText:]:GameStateTutorial.mm">
+         <expressions>
+            <expression
+               value = "480-416">
+            </expression>
+            <expression
+               value = "416/2">
+            </expression>
+            <expression
+               value = "[words count]">
+            </expression>
+         </expressions>
+      </StackState>
+      <StackState
+         stackFrameDescription = "-[GameStateTutorial updateFeedback:]:GameStateTutorial.mm">
+         <expressions>
+            <expression
+               value = "secondsUntilFeedbackHide">
+            </expression>
+            <expression
+               value = "activeFeedbackItem">
+            </expression>
+         </expressions>
+      </StackState>
+      <StackState
+         stackFrameDescription = "-[GameStateTutorial defineFeedback]:GameStateTutorial.mm">
+         <expressions>
+            <expression
+               value = "feedbackItems[1]">
+            </expression>
+            <expression
+               value = "[self activeFeedbackItem]">
+            </expression>
+         </expressions>
+      </StackState>
+      <StackState
+         stackFrameDescription = "-[World draw]:World.mm">
+         <expressions>
+            <expression
+               value = "self.currentLevel.enemyCount">
+            </expression>
+            <expression
+               value = "self.enemies[0]">
+            </expression>
+         </expressions>
+      </StackState>
+      <StackState
+         stackFrameDescription = "-[GameStateTutorial countdownProgressBar]:GameStateTutorial.mm">
+         <expressions>
+            <expression
+               value = "secondsUntilFeedbackHide">
+            </expression>
+         </expressions>
+      </StackState>
+      <StackState
+         stackFrameDescription = "-[Tile update:]:Tile.m">
+         <expressions>
+            <expression
+               value = "drawingFlag">
+            </expression>
+            <expression
+               value = "self.animation.scale">
+            </expression>
+         </expressions>
+      </StackState>
+      <StackState
+         stackFrameDescription = "-[GameStateTutorial updateFeedback:]:GameStateTutorial.m">
+         <expressions>
+            <expression
+               value = "self.hero.dataRow">
+            </expression>
+            <expression
+               value = "feedbackItems[i]">
+            </expression>
+         </expressions>
+      </StackState>
+      <StackState
+         stackFrameDescription = "-[Tile updateBlinking:]:Tile.m">
+         <expressions>
+            <expression
+               value = "self.animation.rotation">
+            </expression>
+         </expressions>
+      </StackState>
+   </StackStates>
+</VariablesStackState>

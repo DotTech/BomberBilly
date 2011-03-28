@@ -372,4 +372,37 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 }
 
 
+- (void) drawFilledRect:(CGRect)rect
+{
+// TODO: Doesnt work yet...
+	CLogGL();
+
+	GLfloat	vertices[] = {	
+		-rect.size.width / 2, -rect.size.height / 2, 0.0,
+		rect.size.width / 2,  -rect.size.height / 2, 0.0,
+		-rect.size.width / 2, rect.size.height / 2,	 0.0,
+		rect.size.width / 2,  rect.size.height / 2,	 0.0 
+	};
+	
+    GLfloat color[] = {
+        1.0f, 0.0f, 0.0f, 
+        0.0f, 0.0f, 0.0f, 
+        0.0f, 0.0f, 0.0f
+    };
+    
+    //glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    //glDisable(GL_TEXTURE_2D);
+    
+    glPushMatrix();
+	glVertexPointer(3, GL_FLOAT, 0, vertices);
+    glColorPointer(3, GL_FLOAT, 0, color);
+	glTranslatef(rect.origin.x + rect.size.width / 2, rect.origin.y + rect.size.height / 2, 0);
+	//glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+	glPopMatrix();
+    
+    //glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    //glEnable(GL_TEXTURE_2D);
+}
+
 @end

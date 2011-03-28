@@ -10,6 +10,8 @@
 #import "GameStateGameOver.h"
 #import "Level.h"
 
+// TODO: Somehow the "Loading..." text is not being displayed when initGameObjects is called for the first time
+
 @implementation GameStateMain
 
 @synthesize world;
@@ -19,14 +21,22 @@
 - (GameStateMain*) initWithFrame:(CGRect)frame andManager:(GameStateManager*)manager
 {
 	CLog();
-	if (self = [super initWithFrame:frame andManager:manager]) 
+	if ((self = [super initWithFrame:frame andManager:manager])) 
 	{
 		// Create game world. We only need to initialize it once!
 		self.world = [[World alloc] init];
 		
+        // Set the starting level
+        // Note: index 0 is the tile debugging level
+        //       index 1 is the tutorial level
+        // So the actual game levels start at index 2
+		currentLevel = LEVELINDEX_PLAYLEVELS_START;
+        #if DEBUG_TILE_DETECTION
+            currentLevel = LEVELINDEX_DEBUGTILES;
+        #endif
+
 		// Initialize game objects for the first time
 		// We'll do this every time we (re)start a level
-		currentLevel = 0;
 		[self initGameObjects:@selector(loadingStatusUpdate:)];
 		
 		// Give the hero some lifes
@@ -56,10 +66,7 @@
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	
 	[resManager.fontMessage drawString:[NSString stringWithFormat:@"Loading... [%d%%]", [percentageDone intValue]] atPoint:CGPointMake(75, 220)];
-
 	NSLog(@"Loading... [%d%%]", [percentageDone intValue]);
-
-	// TODO: Somehow the text is not being displayed...
 	
 	[self swapBuffers];
 }
@@ -70,17 +77,21 @@
 - (void) initGameObjects:(SEL)callback
 {
 	CLog();
-	[self.world loadLevel:currentLevel progressCallback:CreateCallback(self, callback)];
+	[self.world loadLevel:currentLevel progressCallback:CallbackCreate(self, callback)];
 	
 	// Initialize our hero
-	self.hero = [[Hero alloc] init];
+	self.hero = [[Hero alloc] initWithWorld:self.world];
 	self.hero.offScreen = NO;
 	self.hero.x = self.world.currentLevel.heroSpawnPoint.x;
 	self.hero.y = self.world.currentLevel.heroSpawnPoint.y;
 	self.hero.walkTowardsX = 0;
 	self.hero.flipped = NO;
 	self.hero.world = self.world;
-	self.hero.bombs = self.world.currentLevel.startBombs;	
+	self.hero.bombs = self.world.currentLevel.startBombs;
+    
+    #if DEBUG_TILE_DETECTION
+        self.hero.offScreen = (self.hero.x < 0 || self.hero.x > SCREEN_WIDTH || self.hero.y < 0 || self.hero.y > SCREEN_HEIGHT);
+    #endif
 }
 
 
@@ -103,12 +114,18 @@
 		[self handleHeroDeath];
 		
 		// Check if hero reached the finish
-		finished = (self.hero.state == DoneCheering);
+		finished = (self.hero.state == HeroDoneCheering);
 	}
 }
 
 
 - (void) render
+{
+    [self render:YES];
+}
+
+
+- (void) render:(BOOL)swapBuffer
 {
 	CLogGL();
 	
@@ -125,7 +142,8 @@
 			[resManager.fontGameInfo drawString:[NSString stringWithFormat:@"%d", self.hero.bombs] atPoint:CGPointMake(113, 5)];
 			[resManager.fontGameInfo drawString:[NSString stringWithFormat:@"%d", self.hero.lifes] atPoint:CGPointMake(268, 5)];
 			if (DEBUG_SHOW_FPS) {
-				[resManager.fontDebugData drawString:[NSString stringWithFormat:@"FPS:%d", fps] atPoint:CGPointMake(5, 460)];
+				//[resManager.fontDebugData drawString:[NSString stringWithFormat:@"FPS:%d", fps] atPoint:CGPointMake(5, 460)];
+                [resManager.fontGameInfo drawString:[NSString stringWithFormat:@"FPS:%d", fps] atPoint:CGPointMake(130, 5)];
 			}
 			
 			// Draw world
@@ -149,7 +167,9 @@
 	}
 	
 	// Swap working buffer to active buffer
-	[self swapBuffers];
+    if (swapBuffer) {
+        [self swapBuffers];
+    }
 }
 
 
@@ -157,62 +177,67 @@
 {
 	CLogGL();
 	
-	if (touching) 
-	{
-		if (touchPosition.y > SCREEN_HEIGHT - SCREEN_WORLD_HEIGHT)
-		{
-			// World area is being touched
-			// If we are not jumping, falling or dying then we walk
-			if (self.hero.state != Jumping && self.hero.state != Falling && self.hero.state != Dying && self.hero.state != ReachedFinish) 
-			{
-				if (touchPosition.x <= SCREEN_WIDTH / 2) {
-					self.hero.walkTowardsX = 0;
-				}
-				else {
-					self.hero.walkTowardsX = 319;
-				}
-				self.hero.state = Walking;
-			}
-		}
-		else 
-		{
-			// Control panel is being touched
-			if ((touchPosition.x >= BOMB_BUTTON.origin.x && touchPosition.x <= BOMB_BUTTON.origin.x + BOMB_BUTTON.size.width) &&
-				(SCREEN_HEIGHT - touchPosition.y >= BOMB_BUTTON.origin.y && SCREEN_HEIGHT - touchPosition.y <= BOMB_BUTTON.origin.y + BOMB_BUTTON.size.height))
-			{
-				if (gameOver) {
-					currentLevel = 0;
-					gameOver = NO;
-					lifes = 2;
-					[self restartLevel:NO];
-				}
-				
-				// Bomb button is being touched
-				if (self.hero.state == Idle) {
-					self.hero.state = DroppingBomb;
-				}
-			}
-			else if ((touchPosition.x >= KILL_BUTTON.origin.x && touchPosition.x <= KILL_BUTTON.origin.x + KILL_BUTTON.size.width) &&
-				(SCREEN_HEIGHT - touchPosition.y >= KILL_BUTTON.origin.y && SCREEN_HEIGHT - touchPosition.y <= KILL_BUTTON.origin.y + KILL_BUTTON.size.height))
-			{
-				// Suicide button is being touched
-				self.hero.state = Dying;
-			}
-		}
-	}
-	else 
-	{
-		if (self.hero.state == Jumping) {
-			self.hero.state = Falling;
-		}
-		else if (self.hero.state != Falling && self.hero.state != Dying && self.hero.state != ReachedFinish) {
-			self.hero.state = Idle;
-		}
-		
-		// It's important to set WalkTowardsX to -1 otherwise hero will always
-		// try to move to that coordinate during falls
-		self.hero.walkTowardsX = -1;
-	}
+    //if ([self blinkSwitchTarget]) {
+    //    return;
+    //}
+
+    if (touching) 
+    {
+        if (touchPosition.y > SCREEN_HEIGHT - SCREEN_WORLD_HEIGHT)
+        {
+            // World area is being touched
+            // If we are not jumping, falling or dying then we walk
+            if (self.hero.state != HeroJumping && self.hero.state != HeroFalling && 
+                self.hero.state != HeroDying && self.hero.state != HeroReachedFinish) 
+            {
+                if (touchPosition.x <= SCREEN_WIDTH / 2) {
+                    self.hero.walkTowardsX = 0;
+                }
+                else {
+                    self.hero.walkTowardsX = 319;
+                }
+                self.hero.state = HeroWalking;
+            }
+        }
+        else 
+        {
+            // Control panel is being touched
+            if ((touchPosition.x >= BOMB_BUTTON.origin.x && touchPosition.x <= BOMB_BUTTON.origin.x + BOMB_BUTTON.size.width) &&
+                (SCREEN_HEIGHT - touchPosition.y >= BOMB_BUTTON.origin.y && SCREEN_HEIGHT - touchPosition.y <= BOMB_BUTTON.origin.y + BOMB_BUTTON.size.height))
+            {
+                if (gameOver) {
+                    currentLevel = 0;
+                    gameOver = NO;
+                    lifes = 2;
+                    [self restartLevel:NO];
+                }
+                
+                // Bomb button is being touched
+                if (self.hero.state == HeroIdle) {
+                    self.hero.state = HeroDroppingBomb;
+                }
+            }
+            else if ((touchPosition.x >= KILL_BUTTON.origin.x && touchPosition.x <= KILL_BUTTON.origin.x + KILL_BUTTON.size.width) &&
+                (SCREEN_HEIGHT - touchPosition.y >= KILL_BUTTON.origin.y && SCREEN_HEIGHT - touchPosition.y <= KILL_BUTTON.origin.y + KILL_BUTTON.size.height))
+            {
+                // Suicide button is being touched
+                self.hero.state = HeroDying;
+            }
+        }
+    }
+    else 
+    {
+        if (self.hero.state == HeroJumping) {
+            self.hero.state = HeroFalling;
+        }
+        else if (self.hero.state != HeroFalling && self.hero.state != HeroDying && self.hero.state != HeroReachedFinish) {
+            self.hero.state = HeroIdle;
+        }
+        
+        // It's important to set WalkTowardsX to -1 otherwise hero will always
+        // try to move to that coordinate during falls
+        self.hero.walkTowardsX = -1;
+    }
 }
 
 
@@ -228,7 +253,7 @@
 			// Finished the game
 			// TODO: Implement ending
 			NSLog(@"Game finished");
-			currentLevel = 0;
+			currentLevel = LEVELINDEX_PLAYLEVELS_START;
 		}
 	}
 	
@@ -245,7 +270,7 @@
 {
 	CLogGL();
 	
-	if (self.hero.state == Dead) 
+	if (self.hero.state == HeroDead) 
 	{
 		lifes--;
 		self.hero.lifes = lifes;
@@ -256,6 +281,32 @@
 			gameOver = YES;
 		}
 	}
+}
+
+
+- (BOOL) blinkSwitchTarget
+{
+    if (touching && touchedTile == NULL)
+    {
+        if (touchPosition.y > SCREEN_HEIGHT - SCREEN_WORLD_HEIGHT)
+        {
+            int touchingDataRow = floor((double)(SCREEN_HEIGHT - touchPosition.y) / TILE_HEIGHT);
+            int touchingDataColumn = floor((double)(touchPosition.x / TILE_WIDTH));
+            int tileIndex = CoordsToIndex(touchingDataColumn, touchingDataRow);
+            
+            touchedTile = self.world.tilesLayer[tileIndex];
+            [touchedTile startTileBlinking:NO];
+            
+            return YES;
+        }
+    }
+    else if (!touching && touchedTile != NULL)
+    {
+        [touchedTile stopTileBlinkingDone:NO];
+        touchedTile = NULL;
+    }
+    
+    return NO;
 }
 
 @end

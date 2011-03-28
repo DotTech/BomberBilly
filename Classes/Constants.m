@@ -8,9 +8,10 @@
 
 #import "Constants.h"
 
+@class GameStateMain;
+
 const CGRect BOMB_BUTTON = { { 6, 424 }, { 139, 29 } };
 const CGRect KILL_BUTTON = { { 175, 424 }, { 139, 29 } };
-
 
 @implementation Constants
 

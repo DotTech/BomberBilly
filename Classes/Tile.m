@@ -9,6 +9,8 @@
 #import "Tile.h"
 #import "ResourceManager.h"
 
+// TODO: Pass isStateOn argument with executeSwitchAction 
+
 @implementation Tile
 
 @synthesize animation;
@@ -32,6 +34,7 @@
 		[anim release];
 	}
 
+    tileBlinkingFlag = bfNotBlinking;
 	self.x = pos.x;
 	self.y = pos.y;
 	self.width = TILE_WIDTH;
@@ -51,6 +54,9 @@
 }
 
 
+#pragma mark -
+#pragma mark Update & rendering
+
 - (void) draw
 {
 	CLogGL();
@@ -68,7 +74,7 @@
 		CGRect currentFrame = [[self.animation get] getCurrentFrame:NO];
 		[[resManager getTexture:TILES] 
 					 drawInRect:CGRectMake(point.x, point.y, self.width, self.height)
-					   withClip:currentFrame withRotation:0];
+					   withClip:currentFrame withRotation:self.animation.rotation withScale:self.animation.scale];
 	}
 }
 
@@ -80,45 +86,139 @@
 	if (gameTime * 1000 > lastUpdateTime + [[animation get] getCurrentFrameTimeout]) 
 	{
 		CLogGLU();
-		lastUpdateTime = gameTime * 1000;
 		[[animation get] setNextFrame];
+		lastUpdateTime = gameTime * 1000;
 	}
+    
+    [self updateBlinking:gameTime];  
 }
 
 
+#pragma mark -
+#pragma mark SwitchTile target handling
+
+// A SwitchTile has targeted this tile and was toggled by the player.
+// Now we let the tile blink for a short period so the player can see what Tile is being targeted
 - (void) switchCallback:(BOOL)stateIsOn
 {
 	CLog();
-	
-	// Destructible tile switch toggled
-	// Blow up the tile
-	if (self.physicsFlag == pfDestructibleTile) 
-	{
-		self.physicsFlag = pfNoTile;
-		[self.animation setSequence:ANIMATION_TILE_EXPLOSION];
-	}
-	
-	// Deadly tile switch toggled
-	// Change it to a destructible tile
-	if (self.physicsFlag == pfDeadlyTile)
-	{
-		self.physicsFlag = pfDestructibleTile;
-		
-		Animation* anim = [[Animation alloc] initForTile:(int)dfDestructibleBlock];
-		self.animation = anim;
-		[anim release];
-	}
-	
-	// Indestructible tile switch toggled
-	// Change it to a jump tile
-	if (self.physicsFlag == pfIndestructibleTile)
-	{
-		self.physicsFlag = pfJumpTile;
-		
-		Animation* anim = [[Animation alloc] initForTile:(int)dfJumpBlock];
-		self.animation = anim;
-		[anim release];
-	}
+    
+    // Don't use fade out effect when we're going to explode the tile
+    [self startTileBlinking:(self.physicsFlag != pfDestructibleTile)];
+    
+    [NSTimer scheduledTimerWithTimeInterval:SWITCH_TARGETMARKER_DURATION target:self selector:@selector(stopTileBlinking) userInfo:nil repeats:NO];
+}
+
+
+// Marking period (initiated by switchCallback) has passed and we can now execute the actual switch action
+- (void) executeSwitchAction
+{
+    CLog();
+    
+    // Destructible tile switch toggled
+    // Blow up the tile
+    if (self.physicsFlag == pfDestructibleTile) 
+    {
+        self.physicsFlag = pfNoTile;
+        [self.animation setSequence:ANIMATION_TILE_EXPLOSION];
+    }
+    
+    // Deadly tile switch toggled
+    // Change it to a destructible tile
+    if (self.physicsFlag == pfDeadlyTile)
+    {
+        self.physicsFlag = pfDestructibleTile;
+        
+        Animation* anim = [[Animation alloc] initForTile:(int)dfDestructibleBlock];
+        self.animation = anim;
+        [anim release];
+    }
+    
+    // Indestructible tile switch toggled
+    // Change it to a deadly tile with drawingflag dfSpikes
+    if (self.physicsFlag == pfIndestructibleTile)
+    {
+        self.physicsFlag = pfDeadlyTile;
+        
+        Animation* anim = [[Animation alloc] initForTile:(int)dfSpikes];
+        self.animation = anim;
+        [anim release];
+    }
+}
+
+
+#pragma mark -
+#pragma mark Tile blinking
+
+- (void) updateBlinking:(float)gameTime
+{
+    // If tileBlinking is true, make the tile blink by hiding and showing it at a specific interval
+    if (tileBlinkingFlag != bfNotBlinking && gameTime * 1000 > lastBlinkUpdateTime + TILE_BLINKING_INTERVAL)
+    {
+		CLogGLU();
+        
+        if (tileBlinkingFlag == bfBlinkingNoFading || tileBlinkingFlag == bfBlinkingWithFading) {
+            self.drawingFlag = (self.drawingFlag == dfDrawNothing) ? drawingFlagBeforeBlink : dfDrawNothing;
+        }
+        else if (tileBlinkingFlag == bfEndingWithFading && self.animation.scale > 0) {
+            self.animation.scale -= 0.15f;
+            self.animation.rotation += 45;
+        }
+        else if (tileBlinkingFlag == bfFadingIn && self.animation.scale < 1) {
+            self.animation.scale += 0.15f;
+            self.animation.rotation -= 45;
+        }
+        else {
+            [self stopTileBlinkingDone];
+        }
+        
+		lastBlinkUpdateTime = gameTime * 1000;
+    }
+}
+
+
+- (void) startTileBlinking:(BOOL)fadeOutAfterBlink
+{
+    tileBlinkingFlag = (fadeOutAfterBlink) ? bfBlinkingWithFading : bfBlinkingNoFading;
+    drawingFlagBeforeBlink = drawingFlag;
+}
+
+
+- (void) stopTileBlinking
+{
+    tileBlinkingFlag = (tileBlinkingFlag == bfBlinkingWithFading) ? bfEndingWithFading : bfEndingNoFading;
+    drawingFlag = drawingFlagBeforeBlink;
+}
+
+
+- (void) stopTileBlinkingDone
+{
+    [self stopTileBlinkingDone:YES];
+}
+
+
+- (void) stopTileBlinkingDone:(BOOL)executeSwitchAction
+{
+    if (tileBlinkingFlag == bfEndingWithFading) 
+    {
+        if (executeSwitchAction) {
+            [self executeSwitchAction];
+        }
+        tileBlinkingFlag = bfFadingIn;
+        self.animation.scale = 0;
+        self.animation.rotation = 315;
+        
+        return;
+    }
+    
+    if (tileBlinkingFlag != bfFadingIn && executeSwitchAction) {
+        [self executeSwitchAction];
+    }
+    
+    self.animation.scale = 1.0f;
+    self.animation.rotation = 0;
+    drawingFlag = drawingFlagBeforeBlink;
+    tileBlinkingFlag = bfNotBlinking;
 }
 
 

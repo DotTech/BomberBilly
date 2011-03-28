@@ -109,7 +109,7 @@ ResourceManager* resManager;
 	if (result != nil) {
 		return result;
 	}
-	
+
 	// Texture was not buffered. Load it from disk
 	NSString* fullpath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:filename];
 	UIImage* loadImage = [UIImage imageWithContentsOfFile:fullpath];

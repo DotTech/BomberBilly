@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Level.h"
+#import "Enemy.h"
 
 @interface DebugLevel : Level {
 

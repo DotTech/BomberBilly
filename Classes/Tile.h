@@ -18,9 +18,9 @@ typedef enum {
 	pfDeadlyTile = 5,
 	pfFinishTile = 6,
 	pfElevatorTile = 7,
-	pfElevatorHalfTile = 8,	// When an elevator is moving, it can occupy 2 elements at once in the data array.
-						// In this case one of them (the one containing least part of the elevator) is pfElevatorHalfTile
-	pfSwitchTile = 9
+	pfElevatorHalfTile = 1007,	// When an elevator is moving, it can occupy 2 elements at once in the data array.
+                                // In this case one of them (the one containing least part of the elevator) is pfElevatorHalfTile
+	pfSwitchTile = 8
 } PhysicsFlag;
 
 typedef enum {
@@ -32,9 +32,18 @@ typedef enum {
 	dfSpikes = 5,
 	dfExitDoor = 6,
 	dfElevator = 7,
-	dfSwitch = 8
+	dfSwitch = 8,
+    dfYellowRectangle = 9
 } DrawingFlag;
 
+typedef enum {
+    bfNotBlinking = 0,
+    bfBlinkingWithFading = 1,
+    bfBlinkingNoFading = 2,
+    bfFadingIn = 3,
+    bfEndingWithFading = 4,
+    bfEndingNoFading = 5
+} BlinkingFlag;
 
 @interface Tile : NSObject {
 	int width;
@@ -45,6 +54,10 @@ typedef enum {
 	PhysicsFlag physicsFlag;
 	DrawingFlag drawingFlag;
 	Animation* animation;
+    
+    float lastBlinkUpdateTime;    
+    BlinkingFlag tileBlinkingFlag;
+    DrawingFlag drawingFlagBeforeBlink;
 }
 
 @property (nonatomic, retain) Animation* animation;
@@ -60,9 +73,18 @@ typedef enum {
 @property (readonly) int dataColumn;
 
 - (Tile*) initTile:(DrawingFlag)dFlag physicsFlag:(PhysicsFlag)pFlag position:(CGPoint)pos;
+
 - (void) draw;
 - (void) drawAtPoint:(CGPoint)point;
 - (void) update:(float)gameTime;
+
 - (void) switchCallback:(BOOL)stateIsOn;
+- (void) executeSwitchAction;
+
+- (void) updateBlinking:(float)gameTime;
+- (void) startTileBlinking:(BOOL)fadeOutAfterBlink;
+- (void) stopTileBlinking;
+- (void) stopTileBlinkingDone;
+- (void) stopTileBlinkingDone:(BOOL)executeSwitchAction;
 
 @end

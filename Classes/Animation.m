@@ -15,6 +15,7 @@
 @synthesize	tileSheetFileName;
 @synthesize currentSequence;
 @synthesize scale;
+@synthesize rotation;
 
 
 - (Animation*) initForSprite:(NSString*)spriteSheetFile
@@ -23,7 +24,8 @@
 	[super init];
 	
 	maximumFrameSize = CGRectNull;
-	
+	rotation = 0;
+    
 	self.spriteSheetFileName = spriteSheetFile;
 	NSDictionary* pListData = [resManager loadConfigSection:spriteSheetFile];
 	

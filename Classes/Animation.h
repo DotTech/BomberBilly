@@ -16,6 +16,7 @@
 	NSString* spriteSheetFileName;
 	NSString* tileSheetFileName;
 	float scale;
+    float rotation;
 }
 
 @property (nonatomic, retain) NSString* spriteSheetFileName;
@@ -26,6 +27,7 @@
 @property (readonly) int sequenceWidth;
 @property (readonly) int sequenceHeight;
 @property float scale;
+@property float rotation;
 
 - (Animation*) initForSprite:(NSString*)spriteSheetFile;
 - (Animation*) initForTile:(int)tileNumber;

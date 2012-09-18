@@ -353,9 +353,16 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 							rect.origin.x,							rect.origin.y + rect.size.height,		0.0,
 							rect.origin.x + rect.size.width,		rect.origin.y + rect.size.height,		0.0 };
 	
+#pragma warning dit lijkt de fix HANS
+    glDisableClientState(GL_COLOR_ARRAY);
+    
+    
 	glBindTexture(GL_TEXTURE_2D, _name);
 	glVertexPointer(3, GL_FLOAT, 0, vertices);
 	glTexCoordPointer(2, GL_FLOAT, 0, coordinates);
+    //glNormalPointer(GL_FLOAT, 0, normals );
+    
+#pragma warning HIER ZIT DE CRASH! BUG!
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 

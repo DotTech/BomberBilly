@@ -2,7 +2,7 @@
 //  ResourceManager.m
 //  BomberBilly
 //
-//  Created by Ruud van Falier van Falier on 2/14/11.
+//  Created by Ruud van Falier on 2/14/11.
 //  Copyright 2011 DotTech. All rights reserved.
 //
 

@@ -375,6 +375,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	glBindTexture(GL_TEXTURE_2D, _name);
 	glVertexPointer(3, GL_FLOAT, 0, vertices);
 	glTexCoordPointer(2, GL_FLOAT, 0, coordinates);
+    
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 

@@ -2,7 +2,7 @@
 //  Level.h
 //  BomberBilly
 //
-//  Created by Ruud van Falier van Falier on 3/14/11.
+//  Created by Ruud van Falier on 3/14/11.
 //  Copyright 2011 DotTech. All rights reserved.
 //
 

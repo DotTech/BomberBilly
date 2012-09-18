@@ -494,7 +494,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = BomberBilly_Prefix.pch;
 				INFOPLIST_FILE = "BomberBilly-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				PRODUCT_NAME = BomberBilly;
 				VALIDATE_PRODUCT = NO;
 			};
@@ -508,7 +508,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = BomberBilly_Prefix.pch;
 				INFOPLIST_FILE = "BomberBilly-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				PRODUCT_NAME = BomberBilly;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -517,13 +517,15 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = (
+					"$(ARCHS_STANDARD_32_BIT)",
+					armv6,
+				);
 				CODE_SIGN_IDENTITY = "iPhone Developer: Ruud van Falier (Y2553L957C)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ruud van Falier (Y2553L957C)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PROVISIONING_PROFILE = "7A052FE9-48B2-494C-B644-37466B274824";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7A052FE9-48B2-494C-B644-37466B274824";
 				SDKROOT = iphoneos;
@@ -533,13 +535,15 @@
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = (
+					"$(ARCHS_STANDARD_32_BIT)",
+					armv6,
+				);
 				CODE_SIGN_IDENTITY = "iPhone Developer: Ruud van Falier (Y2553L957C)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ruud van Falier (Y2553L957C)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "7A052FE9-48B2-494C-B644-37466B274824";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7A052FE9-48B2-494C-B644-37466B274824";

@@ -2,8 +2,8 @@
 //  TutorialLevel.m
 //  BomberBilly
 //
-//  Created by Ruud van Falier on 3/21/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Created by Ruud van Falier van Falier on 3/21/11.
+//  Copyright 2011 DotTech. All rights reserved.
 //
 
 #import "TutorialLevel.h"

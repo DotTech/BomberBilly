@@ -2,8 +2,8 @@
 //  World.m
 //  BomberBilly
 //
-//  Created by Ruud van Falier on 2/23/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Created by Ruud van Falier van Falier on 2/23/11.
+//  Copyright 2011 DotTech. All rights reserved.
 //
 
 #import "World.h"
@@ -30,7 +30,8 @@
 	// Initialize all available levels
 	// This does not create any of the level's game objects yet, 
 	// which is done in [self loadLevel] when the level becomes active
-    // First element in levels MUST be the tutorial level!
+    // Element 0 must be tile debugging level
+    // Element 1 must be the tutorial level
 	levels = new Level*[NUMBER_OF_LEVELS];
 	levels[0] = [[DebugTileDetection alloc] init];
 	levels[1] = [[TutorialLevel alloc] init];

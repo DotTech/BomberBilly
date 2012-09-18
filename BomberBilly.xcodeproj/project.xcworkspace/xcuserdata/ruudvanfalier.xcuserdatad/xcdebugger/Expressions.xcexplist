@@ -22,6 +22,14 @@
          </expressions>
       </StackState>
       <StackState
+         stackFrameDescription = "-[GameStateMain handleTouch]:GameStateMain.mm">
+         <expressions>
+            <expression
+               value = "[self blinkSwitchTarget]">
+            </expression>
+         </expressions>
+      </StackState>
+      <StackState
          stackFrameDescription = "-[GameStateTutorial initGameObjects:]:GameStateTutorial.m">
          <expressions>
             <expression
@@ -38,19 +46,25 @@
          </expressions>
       </StackState>
       <StackState
-         stackFrameDescription = "-[GameStateTutorial render]:GameStateTutorial.mm">
+         stackFrameDescription = "-[ElevatorTile move:]:ElevatorTile.m">
          <expressions>
             <expression
-               value = "self.activeFeedbackItem[0]">
+               value = "floor((double)(480 - 1 - (self.y + 4 + 32)) / 32)">
             </expression>
             <expression
-               value = "feedbackItems">
+               value = "(479-((double)self.y+36))/32">
             </expression>
             <expression
-               value = "feedbackItems[0]">
+               value = "(480-((double)self.y+36))/32">
             </expression>
             <expression
-               value = "secondsUntilFeedbackHide">
+               value = "[self dataRow]">
+            </expression>
+            <expression
+               value = "self.y">
+            </expression>
+            <expression
+               value = "[self dataColumn]">
             </expression>
          </expressions>
       </StackState>
@@ -75,25 +89,19 @@
          </expressions>
       </StackState>
       <StackState
-         stackFrameDescription = "-[ElevatorTile move:]:ElevatorTile.m">
+         stackFrameDescription = "-[GameStateTutorial render]:GameStateTutorial.mm">
          <expressions>
             <expression
-               value = "floor((double)(480 - 1 - (self.y + 4 + 32)) / 32)">
+               value = "self.activeFeedbackItem[0]">
             </expression>
             <expression
-               value = "(480-((double)self.y+36))/32">
+               value = "feedbackItems">
             </expression>
             <expression
-               value = "[self dataRow]">
+               value = "feedbackItems[0]">
             </expression>
             <expression
-               value = "self.y">
-            </expression>
-            <expression
-               value = "[self dataColumn]">
-            </expression>
-            <expression
-               value = "(479-((double)self.y+36))/32">
+               value = "secondsUntilFeedbackHide">
             </expression>
          </expressions>
       </StackState>
@@ -123,17 +131,6 @@
          </expressions>
       </StackState>
       <StackState
-         stackFrameDescription = "-[GameStateTutorial defineFeedback]:GameStateTutorial.mm">
-         <expressions>
-            <expression
-               value = "feedbackItems[1]">
-            </expression>
-            <expression
-               value = "[self activeFeedbackItem]">
-            </expression>
-         </expressions>
-      </StackState>
-      <StackState
          stackFrameDescription = "-[World draw]:World.mm">
          <expressions>
             <expression
@@ -141,6 +138,17 @@
             </expression>
             <expression
                value = "self.enemies[0]">
+            </expression>
+         </expressions>
+      </StackState>
+      <StackState
+         stackFrameDescription = "-[GameStateTutorial defineFeedback]:GameStateTutorial.mm">
+         <expressions>
+            <expression
+               value = "feedbackItems[1]">
+            </expression>
+            <expression
+               value = "[self activeFeedbackItem]">
             </expression>
          </expressions>
       </StackState>

@@ -2,8 +2,8 @@
 //  Tile.m
 //  BomberBilly
 //
-//  Created by Ruud van Falier on 2/22/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Created by Ruud van Falier van Falier on 2/22/11.
+//  Copyright 2011 DotTech. All rights reserved.
 //
 
 #import "Tile.h"
@@ -20,6 +20,7 @@
 @synthesize y;
 @synthesize physicsFlag;
 @synthesize drawingFlag;
+@synthesize blinkingFlag;
 
 
 - (Tile*) initTile:(DrawingFlag)dFlag physicsFlag:(PhysicsFlag)pFlag position:(CGPoint)pos
@@ -34,7 +35,7 @@
 		[anim release];
 	}
 
-    tileBlinkingFlag = bfNotBlinking;
+    blinkingFlag = bfNotBlinking;
 	self.x = pos.x;
 	self.y = pos.y;
 	self.width = TILE_WIDTH;
@@ -153,18 +154,18 @@
 - (void) updateBlinking:(float)gameTime
 {
     // If tileBlinking is true, make the tile blink by hiding and showing it at a specific interval
-    if (tileBlinkingFlag != bfNotBlinking && gameTime * 1000 > lastBlinkUpdateTime + TILE_BLINKING_INTERVAL)
+    if (blinkingFlag != bfNotBlinking && gameTime * 1000 > lastBlinkUpdateTime + TILE_BLINKING_INTERVAL)
     {
 		CLogGLU();
         
-        if (tileBlinkingFlag == bfBlinkingNoFading || tileBlinkingFlag == bfBlinkingWithFading) {
+        if (blinkingFlag == bfBlinkingNoFading || blinkingFlag == bfBlinkingWithFading) {
             self.drawingFlag = (self.drawingFlag == dfDrawNothing) ? drawingFlagBeforeBlink : dfDrawNothing;
         }
-        else if (tileBlinkingFlag == bfEndingWithFading && self.animation.scale > 0) {
+        else if (blinkingFlag == bfEndingWithFading && self.animation.scale > 0) {
             self.animation.scale -= 0.15f;
             self.animation.rotation += 45;
         }
-        else if (tileBlinkingFlag == bfFadingIn && self.animation.scale < 1) {
+        else if (blinkingFlag == bfFadingIn && self.animation.scale < 1) {
             self.animation.scale += 0.15f;
             self.animation.rotation -= 45;
         }
@@ -179,14 +180,14 @@
 
 - (void) startTileBlinking:(BOOL)fadeOutAfterBlink
 {
-    tileBlinkingFlag = (fadeOutAfterBlink) ? bfBlinkingWithFading : bfBlinkingNoFading;
+    blinkingFlag = (fadeOutAfterBlink) ? bfBlinkingWithFading : bfBlinkingNoFading;
     drawingFlagBeforeBlink = drawingFlag;
 }
 
 
 - (void) stopTileBlinking
 {
-    tileBlinkingFlag = (tileBlinkingFlag == bfBlinkingWithFading) ? bfEndingWithFading : bfEndingNoFading;
+    blinkingFlag = (blinkingFlag == bfBlinkingWithFading) ? bfEndingWithFading : bfEndingNoFading;
     drawingFlag = drawingFlagBeforeBlink;
 }
 
@@ -199,26 +200,26 @@
 
 - (void) stopTileBlinkingDone:(BOOL)executeSwitchAction
 {
-    if (tileBlinkingFlag == bfEndingWithFading) 
+    if (blinkingFlag == bfEndingWithFading) 
     {
         if (executeSwitchAction) {
             [self executeSwitchAction];
         }
-        tileBlinkingFlag = bfFadingIn;
+        blinkingFlag = bfFadingIn;
         self.animation.scale = 0;
         self.animation.rotation = 315;
         
         return;
     }
     
-    if (tileBlinkingFlag != bfFadingIn && executeSwitchAction) {
+    if (blinkingFlag != bfFadingIn && executeSwitchAction) {
         [self executeSwitchAction];
     }
     
     self.animation.scale = 1.0f;
     self.animation.rotation = 0;
     drawingFlag = drawingFlagBeforeBlink;
-    tileBlinkingFlag = bfNotBlinking;
+    blinkingFlag = bfNotBlinking;
 }
 
 

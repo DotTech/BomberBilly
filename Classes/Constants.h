@@ -2,8 +2,8 @@
 //  Constants.h
 //  BomberBilly
 //
-//  Created by ruud on 21/02/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Created by Ruud van Falier on 21/02/11.
+//  Copyright 2011 DotTech. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -16,6 +16,8 @@
 #define TILE_MARKER @"tilemarker.png"         
 #define BACKGROUND_GAMEOVER @"gameover.png"
 #define BACKGROUND_FINISHED @"finished.png"
+#define BACKGROUND_MENU @"menu.png"
+#define BACKGROUND_LEVELEDITOR @"background_leveleditor.png"
 
 // Animation sequences
 #define ANIMATION_HERO_IDLE @"hero_idle"
@@ -89,7 +91,7 @@ extern const CGRect KILL_BUTTON;
 #define DEBUG_ENEMIES_DONT_KILL 0       // Disables enemy kill ability
 #define DEBUG_DEADLYTILES_DONT_KILL 0   // Disabled deadly tiles kill ability
 #define DEBUG_SHOW_FPS 0                // Display frames-per-second counter
-#define DEBUG_ENABLE_CALL_LOGGING 0     // See CallLogging.h for explanation
+#define DEBUG_ENABLE_CALL_LOGGING 1     // See CallLogging.h for explanation
 #define DEBUG_ENABLE_CALL_LOGGING_GAMELOOP_ALL 0
 #define DEBUG_ENABLE_CALL_LOGGING_GAMELOOP_UPDATES 0
 #define DEBUG_CALL_LOGGING_FILTER @""

@@ -3,7 +3,7 @@
 //  BomberBilly
 //
 //  Initially created by Joe Hogue and Paul Zirkle
-//  Rewritten by Ruud van Falier on 2/14/11.
+//  Rewritten by Ruud van Falier van Falier on 2/14/11.
 //
 
 #import "GLESGameState.h"

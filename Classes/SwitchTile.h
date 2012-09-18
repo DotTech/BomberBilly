@@ -2,8 +2,8 @@
 //  SwitchTile.h
 //  BomberBilly
 //
-//  Created by Ruud van Falier on 3/19/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Created by Ruud van Falier van Falier on 3/19/11.
+//  Copyright 2011 DotTech. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -37,6 +37,7 @@ typedef enum {
 @property (readwrite, assign) Tile** targets;
 @property SwitchState state;
 @property BOOL hasBeenSwitched;
+@property int targetsCount;
 
 - (Tile*) initSwitch:(Tile**)targetTiles targetsCount:(int)tCount position:(CGPoint)pos setState:(SwitchState)s;
 - (void) updateSequence;

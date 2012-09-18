@@ -2,8 +2,8 @@
 //  Tile.h
 //  BomberBilly
 //
-//  Created by Ruud van Falier on 2/22/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Created by Ruud van Falier van Falier on 2/22/11.
+//  Copyright 2011 DotTech. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -56,7 +56,7 @@ typedef enum {
 	Animation* animation;
     
     float lastBlinkUpdateTime;    
-    BlinkingFlag tileBlinkingFlag;
+    BlinkingFlag blinkingFlag;
     DrawingFlag drawingFlagBeforeBlink;
 }
 
@@ -67,6 +67,7 @@ typedef enum {
 @property int height;
 @property PhysicsFlag physicsFlag;
 @property DrawingFlag drawingFlag;
+@property BlinkingFlag blinkingFlag;
 
 // Location of tile in the world tile data array
 @property (readonly) int dataRow;

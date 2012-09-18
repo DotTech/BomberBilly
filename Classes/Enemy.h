@@ -2,8 +2,8 @@
 //  Enemy.h
 //  BomberBilly
 //
-//  Created by ruud on 21/02/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Created by Ruud van Falier on 21/02/11.
+//  Copyright 2011 DotTech. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -20,7 +20,7 @@ typedef enum {
 	float lastEnemyUpdateTime;
 	int fallAcceleration;
     BOOL preventFallingOfBlocks;    // Set to true if enemy must turn around when the edge of a block is reached
-                                    // Otherwise it will just continue walking and fall down
+                                    // Otherwise it will just continue walking and fall off
 }
 
 @property EnemyState state;

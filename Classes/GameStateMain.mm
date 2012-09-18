@@ -2,15 +2,17 @@
 //  GameStateSpriteTest.m
 //  BomberBilly
 //
-//  Created by Ruud van Falier on 2/16/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Created by Ruud van Falier van Falier on 2/16/11.
+//  Copyright 2011 DotTech. All rights reserved.
 //
 
 #import "GameStateMain.h"
 #import "GameStateGameOver.h"
 #import "Level.h"
 
-// TODO: Somehow the "Loading..." text is not being displayed when initGameObjects is called for the first time
+// TODO: 
+// - Somehow the "Loading..." text is not being displayed when initGameObjects is called for the first time
+// - Switching to a new gamestate doesnt work properly when running on the actual hardware (tested only on iPad)
 
 @implementation GameStateMain
 
@@ -89,6 +91,8 @@
 	self.hero.world = self.world;
 	self.hero.bombs = self.world.currentLevel.startBombs;
     
+    touchedTile = NULL;
+    
     #if DEBUG_TILE_DETECTION
         self.hero.offScreen = (self.hero.x < 0 || self.hero.x > SCREEN_WIDTH || self.hero.y < 0 || self.hero.y > SCREEN_HEIGHT);
     #endif
@@ -105,6 +109,7 @@
 	
 	if (!restarting)
 	{
+        [self blinkSwitchTarget:gameTime];
 		[self handleTouch];
 		[self.world update:gameTime];
 		[self.hero update:gameTime];
@@ -176,11 +181,7 @@
 - (void) handleTouch
 {
 	CLogGL();
-	
-    //if ([self blinkSwitchTarget]) {
-    //    return;
-    //}
-
+    
     if (touching) 
     {
         if (touchPosition.y > SCREEN_HEIGHT - SCREEN_WORLD_HEIGHT)
@@ -225,7 +226,7 @@
             }
         }
     }
-    else 
+    else
     {
         if (self.hero.state == HeroJumping) {
             self.hero.state = HeroFalling;
@@ -284,7 +285,7 @@
 }
 
 
-- (BOOL) blinkSwitchTarget
+- (BOOL) blinkSwitchTarget:(float)gameTime
 {
     if (touching && touchedTile == NULL)
     {
@@ -293,19 +294,39 @@
             int touchingDataRow = floor((double)(SCREEN_HEIGHT - touchPosition.y) / TILE_HEIGHT);
             int touchingDataColumn = floor((double)(touchPosition.x / TILE_WIDTH));
             int tileIndex = CoordsToIndex(touchingDataColumn, touchingDataRow);
-            
             touchedTile = self.world.tilesLayer[tileIndex];
-            [touchedTile startTileBlinking:NO];
             
-            return YES;
+            // Make switch target tiles blink
+            if (touchedTile.physicsFlag == pfSwitchTile) 
+            {
+                SwitchTile* switchTile = (SwitchTile*)touchedTile;
+                for (int i=0; i<switchTile.targetsCount; i++) {  
+                    [switchTile.targets[i] startTileBlinking:NO];
+                }
+                
+                blinkStartTime = gameTime * 1000;
+                touching = NO;
+                
+                return YES;
+            }
         }
     }
     else if (!touching && touchedTile != NULL)
     {
-        [touchedTile stopTileBlinkingDone:NO];
-        touchedTile = NULL;
+        if (gameTime * 1000 > blinkStartTime + SWITCH_TARGETMARKER_DURATION * 1000)
+        {
+            // Stop switch target tiles blink
+            if (touchedTile.physicsFlag == pfSwitchTile) 
+            {
+                SwitchTile* switchTile = (SwitchTile*)touchedTile;
+                for (int i=0; i<switchTile.targetsCount; i++) {  
+                    [switchTile.targets[i] stopTileBlinkingDone:NO];
+                }
+            }
+            touchedTile = NULL;
+        }
     }
-    
+        
     return NO;
 }
 

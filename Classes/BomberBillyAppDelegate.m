@@ -2,8 +2,8 @@
 //  BomberBillyAppDelegate.m
 //  BomberBilly
 //
-//  Created by ruud on 19/01/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Created by Ruud van Falier on 19/01/11.
+//  Copyright 2011 DotTech. All rights reserved.
 //
 
 #import "BomberBillyAppDelegate.h"
@@ -11,6 +11,7 @@
 #import "GameStateMain.h"
 #import "GameStateGameOver.h"
 #import "GameStateTutorial.h"
+#import "GameStateMenu.h"
 
 @implementation BomberBillyAppDelegate
 
@@ -30,7 +31,7 @@
 	[NSTimer scheduledTimerWithTimeInterval:GAMELOOP_INTERVAL target:self selector:@selector(gameLoop) userInfo:nil repeats:NO];
 	
 	// Create instance of first GameState
-	[self changeGameState:[GameStateTutorial class]];
+	[self changeGameState:[GameStateMenu class]];
 }
 
 - (void) gameLoop

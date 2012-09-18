@@ -2,8 +2,8 @@
 //  SwitchTile.m
 //  BomberBilly
 //
-//  Created by Ruud van Falier on 3/19/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Created by Ruud van Falier van Falier on 3/19/11.
+//  Copyright 2011 DotTech. All rights reserved.
 //
 
 #import "SwitchTile.h"
@@ -14,6 +14,7 @@
 @synthesize targets;
 @synthesize state;
 @synthesize hasBeenSwitched;
+@synthesize targetsCount;
 
 
 - (Tile*) initSwitch:(Tile**)targetTiles targetsCount:(int)tCount position:(CGPoint)pos setState:(SwitchState)s

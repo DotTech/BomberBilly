@@ -58,7 +58,8 @@
 		glTexCoordPointer(2, GL_FLOAT, 0, coordinates);
 		
 		glPushMatrix();
-		glTranslatef(point.x+xoff, point.y, 0);
+		glTranslatef((point.x + xoff) * SCREEN_SCALE, point.y * SCREEN_SCALE, 0);
+        glScalef(SCREEN_SCALE, SCREEN_SCALE, SCREEN_SCALE);
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 		glPopMatrix();
 		xoff += g.pw + charspacing;

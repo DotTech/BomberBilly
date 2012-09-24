@@ -254,21 +254,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 - (void) drawAtPoint:(CGPoint)point 
 {
 	CLogGL();
-	GLfloat		coordinates[] = { 0,	_maxT,
-								_maxS,	_maxT,
-								0,		0,
-								_maxS,	0 };
-	GLfloat		width = (GLfloat)_width * _maxS,
-				height = (GLfloat)_height * _maxT;
-	GLfloat		vertices[] = {	-width / 2.0f + point.x,	-height / 2.0f + point.y,	0.0,
-								width / 2.0f + point.x,	-height / 2.0f + point.y,	0.0,
-								-width / 2.0f + point.x,	height / 2.0f + point.y,	0.0,
-								width / 2.0f + point.x,	height / 2.0f + point.y,	0.0 };
-	
-	glBindTexture(GL_TEXTURE_2D, _name);
-	glVertexPointer(3, GL_FLOAT, 0, vertices);
-	glTexCoordPointer(2, GL_FLOAT, 0, coordinates);
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    [self drawAtPoint:point withRotation:0 withScale:1];
 }
 
 - (void) drawAtPoint:(CGPoint)point withRotation:(CGFloat)rotation withScale:(CGFloat)scale
@@ -293,9 +279,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	glTexCoordPointer(2, GL_FLOAT, 0, coordinates);
 
 	glPushMatrix();
-	glTranslatef(point.x, point.y, 0);
+    
+    GLfloat finalScale = scale * SCREEN_SCALE;
+	glTranslatef(point.x * SCREEN_SCALE, point.y * SCREEN_SCALE, 0);
 	glRotatef(rotation, 0, 0, 1); //in degrees, about screen origin.
-	glScalef(scale, scale, scale);
+	glScalef(finalScale, finalScale, finalScale);
+    
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glPopMatrix();
 }
@@ -323,10 +312,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		gx1,	gy0 
 	};
 	GLfloat	vertices[] = {	
-		-dest.size.width * SCREEN_SCALE / 2,	-dest.size.height * SCREEN_SCALE / 2,	0.0,
-		dest.size.width * SCREEN_SCALE / 2,     -dest.size.height * SCREEN_SCALE / 2,   0.0,
-		-dest.size.width * SCREEN_SCALE / 2,	dest.size.height * SCREEN_SCALE / 2,	0.0,
-		dest.size.width * SCREEN_SCALE / 2,		dest.size.height * SCREEN_SCALE / 2,	0.0 
+		-dest.size.width / 2,   -dest.size.height / 2,	0.0,
+		dest.size.width / 2,    -dest.size.height / 2,   0.0,
+		-dest.size.width / 2,	dest.size.height / 2,	0.0,
+		dest.size.width / 2,	dest.size.height / 2,	0.0 
 	};
 	
 	glBindTexture(GL_TEXTURE_2D, _name);
@@ -335,10 +324,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	
 	glPushMatrix();
     
-    GLfloat screenScale = scale * SCREEN_SCALE;
-	glTranslatef((dest.origin.x * screenScale) + dest.size.width * screenScale / 2, (dest.origin.y * screenScale) + dest.size.height * screenScale / 2, 0);
+    GLfloat finalScale = scale * SCREEN_SCALE;
+    glTranslatef(dest.origin.x * SCREEN_SCALE + dest.size.width / 2 * finalScale, dest.origin.y * SCREEN_SCALE + dest.size.height / 2 * finalScale, 0);
+
 	glRotatef(rotation, 0, 0, 1); //in degrees, about screen origin.
-	glScalef(scale, scale, scale);
+	glScalef(finalScale, finalScale, finalScale);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glPopMatrix();
 }

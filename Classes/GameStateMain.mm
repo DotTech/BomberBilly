@@ -64,13 +64,16 @@
 {
 	CLog();
 	
-	//glClear(GL_COLOR_BUFFER_BIT);
-	//glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	
-	//[resManager.fontMessage drawString:[NSString stringWithFormat:@"Loading... [%d%%]", [percentageDone intValue]] atPoint:CGPointMake(75, 220)];
-	//NSLog(@"Loading... [%d%%]", [percentageDone intValue]);
-	
-	//[self swapBuffers];
+    if ([percentageDone intValue] % 10 == 0)
+    {
+        glClear(GL_COLOR_BUFFER_BIT);
+        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        
+        [resManager.fontMessage drawString:[NSString stringWithFormat:@"Loading... [%d%%]", [percentageDone intValue]] atPoint:CGPointMake(75, 220)];
+        NSLog(@"Loading... [%d%%]", [percentageDone intValue]);
+        
+        [self swapBuffers];
+    }
 }
 
 

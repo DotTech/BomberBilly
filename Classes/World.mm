@@ -41,7 +41,7 @@
     
 	// Debug levels
 	//levels[2] = [[DebugElevators alloc] init];
-    //levels[2] = [[DebugLevel alloc] init];
+    levels[5] = [[DebugLevel alloc] init];
 	
 	return self;
 }

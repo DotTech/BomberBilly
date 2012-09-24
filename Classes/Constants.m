@@ -13,6 +13,8 @@
 const CGRect BOMB_BUTTON = { { 6, 424 }, { 139, 29 } };
 const CGRect KILL_BUTTON = { { 175, 424 }, { 139, 29 } };
 
+short SCREEN_SCALE = 1;
+
 @implementation Constants
 
 

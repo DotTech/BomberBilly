@@ -172,8 +172,8 @@
 	int widthOffset = self.animation.sequenceWidth / 2;
 	int column = ceil((self.x + widthOffset) / TILE_WIDTH);
 	
-	if (column > (SCREEN_WIDTH / TILE_WIDTH) - 1) {
-		column = (SCREEN_WIDTH / TILE_WIDTH) - 1;
+	if (column > SCREEN_WIDTH / TILE_WIDTH - 1) {
+		column = SCREEN_WIDTH / TILE_WIDTH - 1;
 	}
 	
 	return column;

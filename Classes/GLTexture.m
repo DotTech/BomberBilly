@@ -313,19 +313,20 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 {
 	CLogGL();
 	GLfloat 
-	gx0 = src.origin.x/_width, gx1 = (src.origin.x+src.size.width)/_width,
-	gy0 = src.origin.y/_height, gy1 = (src.origin.y+src.size.height)/_height;
-	GLfloat		coordinates[] = { 
+        gx0 = src.origin.x/_width, gx1 = (src.origin.x+src.size.width)/_width,
+        gy0 = src.origin.y/_height, gy1 = (src.origin.y+src.size.height)/_height;
+        
+	GLfloat		coordinates[] = {
 		gx0,	gy1,
 		gx1,	gy1,
 		gx0,	gy0,
 		gx1,	gy0 
 	};
 	GLfloat	vertices[] = {	
-		-dest.size.width/2,		-dest.size.height/2,	0.0,
-		dest.size.width/2,		-dest.size.height/2,	0.0,
-		-dest.size.width/2,		dest.size.height/2,		0.0,
-		dest.size.width/2,		dest.size.height/2,		0.0 
+		-dest.size.width * SCREEN_SCALE / 2,	-dest.size.height * SCREEN_SCALE / 2,	0.0,
+		dest.size.width * SCREEN_SCALE / 2,     -dest.size.height * SCREEN_SCALE / 2,   0.0,
+		-dest.size.width * SCREEN_SCALE / 2,	dest.size.height * SCREEN_SCALE / 2,	0.0,
+		dest.size.width * SCREEN_SCALE / 2,		dest.size.height * SCREEN_SCALE / 2,	0.0 
 	};
 	
 	glBindTexture(GL_TEXTURE_2D, _name);
@@ -333,7 +334,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	glTexCoordPointer(2, GL_FLOAT, 0, coordinates);
 	
 	glPushMatrix();
-	glTranslatef(dest.origin.x+dest.size.width/2, dest.origin.y+dest.size.height/2 * scale, 0);
+    
+    GLfloat screenScale = scale * SCREEN_SCALE;
+	glTranslatef((dest.origin.x * screenScale) + dest.size.width * screenScale / 2, (dest.origin.y * screenScale) + dest.size.height * screenScale / 2, 0);
 	glRotatef(rotation, 0, 0, 1); //in degrees, about screen origin.
 	glScalef(scale, scale, scale);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -348,21 +351,14 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 								_maxS,	_maxT,
 								0,		0,
 								_maxS,	0  };
-	GLfloat	vertices[] = {	rect.origin.x,							rect.origin.y,							0.0,
-							rect.origin.x + rect.size.width,		rect.origin.y,							0.0,
-							rect.origin.x,							rect.origin.y + rect.size.height,		0.0,
-							rect.origin.x + rect.size.width,		rect.origin.y + rect.size.height,		0.0 };
+	GLfloat	vertices[] = {	rect.origin.x * SCREEN_SCALE,                                   rect.origin.y * SCREEN_SCALE,                                   0.0,
+							rect.origin.x * SCREEN_SCALE + rect.size.width * SCREEN_SCALE,	rect.origin.y * SCREEN_SCALE,                                   0.0,
+							rect.origin.x * SCREEN_SCALE,                                   rect.origin.y * SCREEN_SCALE + rect.size.height * SCREEN_SCALE, 0.0,
+							rect.origin.x * SCREEN_SCALE + rect.size.width * SCREEN_SCALE,	rect.origin.y * SCREEN_SCALE + rect.size.height * SCREEN_SCALE,	0.0 };
 	
-#pragma warning dit lijkt de fix HANS
-    glDisableClientState(GL_COLOR_ARRAY);
-    
-    
 	glBindTexture(GL_TEXTURE_2D, _name);
 	glVertexPointer(3, GL_FLOAT, 0, vertices);
 	glTexCoordPointer(2, GL_FLOAT, 0, coordinates);
-    //glNormalPointer(GL_FLOAT, 0, normals );
-    
-#pragma warning HIER ZIT DE CRASH! BUG!
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
@@ -378,39 +374,4 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
-
-
-- (void) drawFilledRect:(CGRect)rect
-{
-// TODO: Doesnt work yet...
-	CLogGL();
-
-	GLfloat	vertices[] = {	
-		-rect.size.width / 2, -rect.size.height / 2, 0.0,
-		rect.size.width / 2,  -rect.size.height / 2, 0.0,
-		-rect.size.width / 2, rect.size.height / 2,	 0.0,
-		rect.size.width / 2,  rect.size.height / 2,	 0.0 
-	};
-	
-    GLfloat color[] = {
-        1.0f, 0.0f, 0.0f, 
-        0.0f, 0.0f, 0.0f, 
-        0.0f, 0.0f, 0.0f
-    };
-    
-    //glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-    //glDisable(GL_TEXTURE_2D);
-    
-    glPushMatrix();
-	glVertexPointer(3, GL_FLOAT, 0, vertices);
-    glColorPointer(3, GL_FLOAT, 0, color);
-	glTranslatef(rect.origin.x + rect.size.width / 2, rect.origin.y + rect.size.height / 2, 0);
-	//glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-	glPopMatrix();
-    
-    //glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    //glEnable(GL_TEXTURE_2D);
-}
-
 @end

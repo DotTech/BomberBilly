@@ -22,8 +22,12 @@
 - (void) applicationDidFinishLaunching:(UIApplication *)application
 {
 	CLog();
-	application.statusBarHidden = YES;
 	
+    application.statusBarHidden = YES;
+    
+    // Determine screen scale
+    SCREEN_SCALE = [[UIScreen mainScreen] scale];
+    
 	// Initialize resourcemanager
 	[ResourceManager initialize];
 	
@@ -31,7 +35,7 @@
 	[NSTimer scheduledTimerWithTimeInterval:GAMELOOP_INTERVAL target:self selector:@selector(gameLoop) userInfo:nil repeats:NO];
 	
 	// Create instance of first GameState
-	[self changeGameState:[GameStateMenu class]];
+	[self changeGameState:[GameStateMain class]];
 }
 
 - (void) gameLoop

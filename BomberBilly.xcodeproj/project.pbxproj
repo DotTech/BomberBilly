@@ -57,6 +57,7 @@
 		BAC2F1811312BD51007C86F2 /* sprites_hero.png in Resources */ = {isa = PBXBuildFile; fileRef = BAC2F1801312BD51007C86F2 /* sprites_hero.png */; };
 		BAC2F21A1312C863007C86F2 /* Hero.m in Sources */ = {isa = PBXBuildFile; fileRef = BAC2F2191312C863007C86F2 /* Hero.m */; };
 		BAC2F2301312CA51007C86F2 /* Enemy.m in Sources */ = {isa = PBXBuildFile; fileRef = BAC2F22F1312CA51007C86F2 /* Enemy.m */; };
+		CE91557716090A91003C8BD2 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE91557616090A91003C8BD2 /* README.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -151,6 +152,7 @@
 		BAC2F2191312C863007C86F2 /* Hero.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Hero.m; sourceTree = "<group>"; };
 		BAC2F22E1312CA51007C86F2 /* Enemy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Enemy.h; sourceTree = "<group>"; };
 		BAC2F22F1312CA51007C86F2 /* Enemy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Enemy.m; sourceTree = "<group>"; };
+		CE91557616090A91003C8BD2 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,6 +212,7 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				CE91557616090A91003C8BD2 /* README.txt */,
 				32CA4F630368D1EE00C91783 /* BomberBilly_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 			);
@@ -434,6 +437,7 @@
 				2A439DC8133D28B2003EB819 /* marker.png in Resources */,
 				2A8C59D1134A37520026A894 /* menu.png in Resources */,
 				2A8C59D6134A47C00026A894 /* background_leveleditor.png in Resources */,
+				CE91557716090A91003C8BD2 /* README.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

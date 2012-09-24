@@ -104,7 +104,6 @@ These functions require GL_TEXTURE_2D and both GL_VERTEX_ARRAY and GL_TEXTURE_CO
 - (void) drawInRect:(CGRect)dest withClip:(CGRect)src withRotation:(CGFloat)rotation withScale:(CGFloat)scale;
 - (void) drawInRect:(CGRect)rect;
 - (void) drawInVertices:(GLfloat*) vertices;
-- (void) drawFilledRect:(CGRect)rect;
 @end
 
 /*

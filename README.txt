@@ -29,6 +29,7 @@ TODOs / Bugs:
 	    Highscore lists are a must, so are social network connections to post achievements.
 - [prio 5]: Think about payment model (free download and purchase levels? free lite version and paid full version?)
 - [prio 5]: Think about how to get someone to make good graphics
+- Support for both retina and non-retina displays...
 
 
 =========================================================================================================================

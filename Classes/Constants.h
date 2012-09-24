@@ -83,15 +83,11 @@
 #define TUTORIAL_MARKER @"marker.png"           // Image used to mark the game objects during tutorial
 #define TUTORIAL_FEEDBACK_DURATION 3000         // How long to display feedback messages before hiding them
 
-// Location of game control buttons (value defined in Constants.m)
-extern const CGRect BOMB_BUTTON;
-extern const CGRect KILL_BUTTON;
-
 // Debugging options
 #define DEBUG_ENEMIES_DONT_KILL 0       // Disables enemy kill ability
 #define DEBUG_DEADLYTILES_DONT_KILL 0   // Disabled deadly tiles kill ability
 #define DEBUG_SHOW_FPS 0                // Display frames-per-second counter
-#define DEBUG_ENABLE_CALL_LOGGING 1     // See CallLogging.h for explanation
+#define DEBUG_ENABLE_CALL_LOGGING 0     // See CallLogging.h for explanation
 #define DEBUG_ENABLE_CALL_LOGGING_GAMELOOP_ALL 0
 #define DEBUG_ENABLE_CALL_LOGGING_GAMELOOP_UPDATES 0
 #define DEBUG_CALL_LOGGING_FILTER @""
@@ -100,6 +96,14 @@ extern const CGRect KILL_BUTTON;
 								// On the first row, tiles that are detected left and right from the hero will light up.
 								// On the second row, tiles that are detected underneath hero will light up.
 #define DEBUG_TILE_DETECTION_ENEMIES 0  // Runs tile detection debugging with an Enemy entity instead of a Hero entity
+
+// Location of game control buttons (value defined in Constants.m)
+extern const CGRect BOMB_BUTTON;
+extern const CGRect KILL_BUTTON;
+
+// Screen scale (set in BomberBillyAppDelegate.m)
+// This is used during all texture drawing
+extern short SCREEN_SCALE;
 
 // Import global helper functions
 // This MUST be done after the definitions, since they are required for some helper functions

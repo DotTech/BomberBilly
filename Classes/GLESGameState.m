@@ -68,12 +68,11 @@ GLuint glesRenderBuffer;
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    glEnableClientState(GL_COLOR_ARRAY);
 	
 	// TODO (joe): this was originally done in bindToState, since that is where we would get sizing information.
 	// But I couldn't get it to work right when switching between states; I think it messed up the camera.  
 	// So it's here for now. 
-	CGSize newSize = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT);
+	CGSize newSize = CGSizeMake(SCREEN_WIDTH * SCREEN_SCALE, SCREEN_HEIGHT * SCREEN_SCALE);
 	newSize.width = roundf(newSize.width);
 	newSize.height = roundf(newSize.height);
 	

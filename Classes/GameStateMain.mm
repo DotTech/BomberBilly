@@ -64,13 +64,13 @@
 {
 	CLog();
 	
-	glClear(GL_COLOR_BUFFER_BIT);
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	//glClear(GL_COLOR_BUFFER_BIT);
+	//glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	
-	[resManager.fontMessage drawString:[NSString stringWithFormat:@"Loading... [%d%%]", [percentageDone intValue]] atPoint:CGPointMake(75, 220)];
-	NSLog(@"Loading... [%d%%]", [percentageDone intValue]);
+	//[resManager.fontMessage drawString:[NSString stringWithFormat:@"Loading... [%d%%]", [percentageDone intValue]] atPoint:CGPointMake(75, 220)];
+	//NSLog(@"Loading... [%d%%]", [percentageDone intValue]);
 	
-	[self swapBuffers];
+	//[self swapBuffers];
 }
 
 
@@ -147,7 +147,6 @@
 			[resManager.fontGameInfo drawString:[NSString stringWithFormat:@"%d", self.hero.bombs] atPoint:CGPointMake(113, 5)];
 			[resManager.fontGameInfo drawString:[NSString stringWithFormat:@"%d", self.hero.lifes] atPoint:CGPointMake(268, 5)];
 			if (DEBUG_SHOW_FPS) {
-				//[resManager.fontDebugData drawString:[NSString stringWithFormat:@"FPS:%d", fps] atPoint:CGPointMake(5, 460)];
                 [resManager.fontGameInfo drawString:[NSString stringWithFormat:@"FPS:%d", fps] atPoint:CGPointMake(130, 5)];
 			}
 			

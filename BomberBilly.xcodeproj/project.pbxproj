@@ -57,6 +57,7 @@
 		BAC2F1811312BD51007C86F2 /* sprites_hero.png in Resources */ = {isa = PBXBuildFile; fileRef = BAC2F1801312BD51007C86F2 /* sprites_hero.png */; };
 		BAC2F21A1312C863007C86F2 /* Hero.m in Sources */ = {isa = PBXBuildFile; fileRef = BAC2F2191312C863007C86F2 /* Hero.m */; };
 		BAC2F2301312CA51007C86F2 /* Enemy.m in Sources */ = {isa = PBXBuildFile; fileRef = BAC2F22F1312CA51007C86F2 /* Enemy.m */; };
+		CE85B9A916122F3800A33360 /* gameover.png in Resources */ = {isa = PBXBuildFile; fileRef = CE85B9A816122F3800A33360 /* gameover.png */; };
 		CE91557716090A91003C8BD2 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE91557616090A91003C8BD2 /* README.txt */; };
 /* End PBXBuildFile section */
 
@@ -152,6 +153,7 @@
 		BAC2F2191312C863007C86F2 /* Hero.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Hero.m; sourceTree = "<group>"; };
 		BAC2F22E1312CA51007C86F2 /* Enemy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Enemy.h; sourceTree = "<group>"; };
 		BAC2F22F1312CA51007C86F2 /* Enemy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Enemy.m; sourceTree = "<group>"; };
+		CE85B9A816122F3800A33360 /* gameover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gameover.png; path = Resources/gameover.png; sourceTree = "<group>"; };
 		CE91557616090A91003C8BD2 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -323,6 +325,7 @@
 		2AF01F9E132E920C007C3713 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				CE85B9A816122F3800A33360 /* gameover.png */,
 				2A8C59D5134A47C00026A894 /* background_leveleditor.png */,
 				2A8C59D0134A37520026A894 /* menu.png */,
 				2A439DC7133D28B2003EB819 /* marker.png */,
@@ -438,6 +441,7 @@
 				2A8C59D1134A37520026A894 /* menu.png in Resources */,
 				2A8C59D6134A47C00026A894 /* background_leveleditor.png in Resources */,
 				CE91557716090A91003C8BD2 /* README.txt in Resources */,
+				CE85B9A916122F3800A33360 /* gameover.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

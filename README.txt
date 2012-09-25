@@ -1,16 +1,15 @@
 ==============================================================
-| BomberBilly - 2D puzzle platform game for iPhone/iPad/iPod |
-| ---------------------------------------------------------- |
-| Project started on February 22th, 2011                     |
-| First release (version x.x.x) on ???                       |
-|                                                            |
-| ---------------------------------------------------------- |
-| Created by Ruud van Falier                                 |
-|                                                            |
-| E-mail: 	ruud.vanfalier@gmail.com                     |
-| Twitter:	BrruuD                                       |
-| LinkedIn:	-                                            |
-| Blog:		http://ruuddottech.blogspot.com              |
+ BomberBilly - 2D puzzle platform game for iOS
+--------------------------------------------------------------
+ Project started on February 22nd, 2011
+ Status: in development, unreleased
+--------------------------------------------------------------
+ Created by Ruud van Falier
+
+ E-mail:    ruud.vanfalier@gmail.com
+ Twitter:   BrruuD
+ LinkedIn:  http://nl.linkedin.com/in/ruudvanfalier
+ Blog:      http://ruuddottech.blogspot.com
 ==============================================================
 
 
@@ -18,23 +17,32 @@ TODOs / Bugs:
 -------------
 - [prio 1]: New tile: partly penetrable tile, which allows you to walk through from one side, but not from another side
 - [prio 1]: Switching gamestates is working fine on simulation, but on hardware (iPad, iPhone not tested yet) it will
-  	    take an enormous amount of time for glFinish() to be executed after switching from one gamestate to another.
-	    For this reason GameStateGameOver has been disabled for now and the player gets 999 lifes to start with...
+            take an enormous amount of time for glFinish() to be executed after switching from one gamestate to another.
+            For this reason GameStateGameOver has been disabled for now and the player gets 999 lifes to start with...
 - [prio 2]: Loading screen is not showing at initial load, only after level restarts
 - [prio 2]: Enemy tile detection seems a little off when they move to the left.
-	    They switch to another data column when on screen they did clearly not move into that column ey
+            They switch to another data column when on screen they did clearly not move into that column ey
 - [prio 3]: Level editor
 - [prio 3]: Create more levels; i want 10 good levels to test how people like it when they play them
 - [prio 4]: A better end-goal must be come up with. Like keeping scores, or finishing levels in fasted time.
-	    Highscore lists are a must, so are social network connections to post achievements.
+            Highscore lists are a must, so are social network connections to post achievements.
 - [prio 5]: Think about payment model (free download and purchase levels? free lite version and paid full version?)
 - [prio 5]: Think about how to get someone to make good graphics
-- Support for both retina and non-retina displays...
 
 
 =========================================================================================================================
-Version:	0.1.6
-Date:		2011-03-28
+Version:    0.0.4
+Date:       2012-09-25
+
+Added features:
+---------------
+- Added support for scaling (Retina displays)
+- Version numbering revised
+
+
+=========================================================================================================================
+Version:    0.0.3
+Date:       2011-03-28
 
 Added features:
 ---------------
@@ -52,8 +60,8 @@ Added features:
 
 
 =========================================================================================================================
-Version:	0.1.5
-Date:		2011-03-25
+Version:    0.0.2
+Date:       2011-03-25
 
 Added features:
 ---------------
@@ -62,8 +70,8 @@ Added features:
 
 
 =========================================================================================================================
-Version: 	0.1.4
-Date:		2011-03-20
+Version:    0.0.1
+Date:       2011-03-20
 
 I've decided to keep track of changes for each version.
 Because this is the first release notes version, it will list all (or at least most) currently finished features.

@@ -42,7 +42,7 @@
                                     // slows down when moving up and it speeds up when moving down
 #define HERO_JUMP_MAXHEIGHT 60      // Maximum height in pixels that the player is allowed to jump
 #define HERO_UPDATE_INTERVAL 30
-#define HERO_START_LIFES 999
+#define HERO_START_LIFES 1
 
 // Elevator parameters
 #define ELEVATOR_ACCELERATION 4         // Pixels added to position when elevator moves one step

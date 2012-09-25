@@ -296,7 +296,7 @@
             int touchingDataRow = floor((double)(SCREEN_HEIGHT - touchPosition.y) / TILE_HEIGHT);
             int touchingDataColumn = floor((double)(touchPosition.x / TILE_WIDTH));
             int tileIndex = CoordsToIndex(touchingDataColumn, touchingDataRow);
-            touchedTile = self.world.tilesLayer[tileIndex];
+            touchedTile = [self.world.tilesLayer[tileIndex] retain];
             
             // Make switch target tiles blink
             if (touchedTile.physicsFlag == pfSwitchTile) 
@@ -325,6 +325,8 @@
                     [switchTile.targets[i] stopTileBlinkingDone:NO];
                 }
             }
+            
+            [touchedTile release];
             touchedTile = NULL;
         }
     }

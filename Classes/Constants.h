@@ -42,7 +42,7 @@
                                     // slows down when moving up and it speeds up when moving down
 #define HERO_JUMP_MAXHEIGHT 60      // Maximum height in pixels that the player is allowed to jump
 #define HERO_UPDATE_INTERVAL 30
-#define HERO_START_LIFES 1
+#define HERO_START_LIFES 3
 
 // Elevator parameters
 #define ELEVATOR_ACCELERATION 4         // Pixels added to position when elevator moves one step
@@ -86,7 +86,7 @@
 // Debugging options
 #define DEBUG_ENEMIES_DONT_KILL 0       // Disables enemy kill ability
 #define DEBUG_DEADLYTILES_DONT_KILL 0   // Disabled deadly tiles kill ability
-#define DEBUG_SHOW_FPS 1                // Display frames-per-second counter
+#define DEBUG_SHOW_FPS 0                // Display frames-per-second counter
 #define DEBUG_ENABLE_CALL_LOGGING 0     // See CallLogging.h for explanation
 #define DEBUG_ENABLE_CALL_LOGGING_GAMELOOP_ALL 0
 #define DEBUG_ENABLE_CALL_LOGGING_GAMELOOP_UPDATES 0

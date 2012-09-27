@@ -13,28 +13,23 @@
 ====================================================================================
 
 
-TODOs / Bugs:
--------------
-- [prio 1]: New tile: partly penetrable tile, which allows you to walk through from
-            one side, but not from another side
-- [prio 1]: Switching gamestates is working fine on simulation, but on hardware 
-            (iPad, iPhone not tested yet) it will take an enormous amount of time 
-            for glFinish() to be executed after switching from one gamestate to 
-            another. For this reason GameStateGameOver has been disabled for now and
-            the player gets 999 lifes to start with...
-- [prio 2]: Loading screen is not showing at initial load, only after level restarts
-- [prio 2]: Enemy tile detection seems a little off when they move to the left.
-            They switch to another data column when on screen they did clearly not
-            move into that column ey
-- [prio 3]: Level editor
-- [prio 3]: Create more levels; i want 10 good levels to test how people like it 
-            when they play them
-- [prio 4]: A better end-goal must be come up with. Like keeping scores, or 
-            finishing levels in fasted time. Highscore lists are a must, so are 
-            social network connections to post achievements.
-- [prio 5]: Think about payment model (free download and purchase levels? 
-            free lite version and paid full version?)
-- [prio 5]: Think about how to get someone to make good graphics
+TODO for release in App Store:
+------------------------------
+- [new] New tile: partly penetrable tile, which allows you to walk through from
+		one side, but not from another side
+- [bug] Loading screen is not showing at initial load, only after level restarts
+- [bug] Enemy tile detection seems a little off when they move to the left.
+        They switch to another data column when on screen they did clearly not
+        move into that column.
+- [new] Create more levels for a demo that goes in the App Store;
+		make 10 good levels to test how people like it when they play them			
+- [new] Push news and new apps
+- [new] New graphics for free demo in app store
+- [bug] Tutorial mode, touch to end help text
+- [new] Score after level is done, based on time and bombs left
+		Post score to online highscore list
+		Sharing option for scores
+
 
 
 ====================================================================================

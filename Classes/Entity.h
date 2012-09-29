@@ -11,12 +11,10 @@
 #import "World.h"
 
 @interface Entity : Sprite {
-	World* world;
-    int state;
 }
 
 @property (nonatomic, retain) World* world;
-@property int state;
+@property (nonatomic, retain) id state;
 
 - (Sprite*) initSprite:(NSString*)spriteName withWorld:(World*)w;
 

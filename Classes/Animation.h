@@ -9,14 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "AnimationSequence.h"
 
-@interface Animation : NSObject {
-	NSMutableDictionary* sequences;
-	CGRect maximumFrameSize;
-	NSString* currentSequence;
-	NSString* spriteSheetFileName;
-	NSString* tileSheetFileName;
-	float scale;
-    float rotation;
+@interface Animation : NSObject
+{
+@private
+    NSMutableDictionary* sequences;
+    CGRect maximumFrameSize;
 }
 
 @property (nonatomic, retain) NSString* spriteSheetFileName;

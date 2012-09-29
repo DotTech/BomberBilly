@@ -47,7 +47,7 @@ ResourceManager* resManager;
 - (ResourceManager*) init
 {
 	CLog();
-	[super init];
+	self = [super init];
 	
 	self.textures = [NSMutableDictionary dictionary];
 	self.configuration = [NSMutableDictionary dictionary];
@@ -59,8 +59,8 @@ ResourceManager* resManager;
 - (void) shutdown
 {
 	CLog();
-	[textures removeAllObjects];
-	[configuration removeAllObjects];
+	[self.textures removeAllObjects];
+	[self.configuration removeAllObjects];
 	[fontDebugData release];
 	[fontMessage release];
 }

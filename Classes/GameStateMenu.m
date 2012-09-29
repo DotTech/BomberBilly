@@ -24,34 +24,34 @@
 
 - (void) update:(float)gameTime
 {
-	if (touching)
+	if (self.touching)
 	{
 		// Run tutorial button
         // coords: 79, 107 - size: 172,26
-		if ((touchPosition.x >= 79 && touchPosition.x <= 251) &&
-			(SCREEN_HEIGHT - touchPosition.y >= 107 && SCREEN_HEIGHT - touchPosition.y <= 133))
+		if ((self.touchPosition.x >= 79 && self.touchPosition.x <= 251) &&
+			(SCREEN_HEIGHT - self.touchPosition.y >= 107 && SCREEN_HEIGHT - self.touchPosition.y <= 133))
 		{
-			[gameStateManager changeGameState:[GameStateTutorial class]];
+			[self.gameStateManager changeGameState:[GameStateTutorial class]];
 			return;
 		}
         
         // Run game button
         // coords: 95, 167 - size: 141,29
-		if ((touchPosition.x >= 95 && touchPosition.x <= 236) &&
-			(SCREEN_HEIGHT - touchPosition.y >= 167 && SCREEN_HEIGHT - touchPosition.y <= 196))
+		if ((self.touchPosition.x >= 95 && self.touchPosition.x <= 236) &&
+			(SCREEN_HEIGHT - self.touchPosition.y >= 167 && SCREEN_HEIGHT - self.touchPosition.y <= 196))
 		{
-			[gameStateManager changeGameState:[GameStateMain class]];
+			[self.gameStateManager changeGameState:[GameStateMain class]];
 			return;
 		}
         
         // Run tutorial button
         // coords: 81, 224 - size: 170,28
-		if ((touchPosition.x >= 81 && touchPosition.x <= 251) &&
-			(SCREEN_HEIGHT - touchPosition.y >= 224 && SCREEN_HEIGHT - touchPosition.y <= 252))
+		/*if ((self.touchPosition.x >= 81 && self.touchPosition.x <= 251) &&
+			(SCREEN_HEIGHT - self.touchPosition.y >= 224 && SCREEN_HEIGHT - self.touchPosition.y <= 252))
 		{
-			[gameStateManager changeGameState:[GameStateLevelEditor class]];
+			[self.gameStateManager changeGameState:[GameStateLevelEditor class]];
 			return;
-		}
+		}*/
 	}
 }
 

@@ -25,23 +25,23 @@
 - (World*) init
 {
 	CLog();
-	[super init];
+	self = [super init];
 	
 	// Initialize all available levels
 	// This does not create any of the level's game objects yet, 
 	// which is done in [self loadLevel] when the level becomes active
     // Element 0 must be tile debugging level
     // Element 1 must be the tutorial level
-	levels = new Level*[NUMBER_OF_LEVELS];
-	levels[0] = [[DebugTileDetection alloc] init];
-	levels[1] = [[TutorialLevel alloc] init];
-	levels[2] = [[LevelOne alloc] init];
-	levels[3] = [[LevelTwo alloc] init];
-    levels[4] = [[LevelThree alloc] init];
+	self.levels = new Level*[NUMBER_OF_LEVELS];
+	self.levels[0] = [[DebugTileDetection alloc] init];
+	self.levels[1] = [[TutorialLevel alloc] init];
+	self.levels[2] = [[LevelOne alloc] init];
+	self.levels[3] = [[LevelTwo alloc] init];
+    self.levels[4] = [[LevelThree alloc] init];
     
 	// Debug levels
 	//levels[2] = [[DebugElevators alloc] init];
-    levels[5] = [[DebugLevel alloc] init];
+    self.levels[5] = [[DebugLevel alloc] init];
 	
 	return self;
 }
@@ -50,9 +50,9 @@
 - (void) dealloc
 {
 	CLog();
-	releaseObjectArray(tilesLayer, self.currentLevel.worldTileCount);
-	releaseObjectArray(enemies, self.currentLevel.enemyCount);
-	releaseObjectArray(levels, NUMBER_OF_LEVELS);
+	releaseObjectArray(self.tilesLayer, self.currentLevel.worldTileCount);
+	releaseObjectArray(self.enemies, self.currentLevel.enemyCount);
+	releaseObjectArray(self.levels, NUMBER_OF_LEVELS);
 	[super dealloc];
 }
 
@@ -63,16 +63,16 @@
 - (void) loadLevel:(int)index progressCallback:(Callback)callback
 {
 	CLog();
-	releaseObjectArray(tilesLayer, self.currentLevel.worldTileCount);
-	releaseObjectArray(enemies, self.currentLevel.enemyCount);
+	releaseObjectArray(self.tilesLayer, self.currentLevel.worldTileCount);
+	releaseObjectArray(self.enemies, self.currentLevel.enemyCount);
 	
 	// Invoke callback and pass the loading progress percentage 
 	[callback.callbackObject performSelector:callback.callbackMethod withObject:[NSNumber numberWithInt:0]];
     
     // Allocate and initialize level tiles and enemies
 	currentLevelIndex = index;
-	tilesLayer = [self.currentLevel getTilesData:self progressCallback:callback];
-	enemies = [self.currentLevel getEnemyData:self];
+	self.tilesLayer = [self.currentLevel getTilesData:self progressCallback:callback];
+	self.enemies = [self.currentLevel getEnemyData:self];
 }
 
 

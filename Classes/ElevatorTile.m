@@ -21,7 +21,7 @@
 - (Tile*) initElevator:(DrawingFlag)dFlag physicsFlag:(PhysicsFlag)pFlag position:(CGPoint)pos setState:(ElevatorState)s worldPointer:(World*)w
 {
 	CLog();
-	[super initTile:dFlag physicsFlag:pFlag position:pos];
+	self = [super initTile:dFlag physicsFlag:pFlag position:pos];
 	
 	self.world = w;
 	self.state = s;
@@ -213,7 +213,7 @@
                 int moveToIndex = CoordsToIndex(self.dataColumn, newDataRow);
 				self.y = self.world.tilesLayer[moveToIndex].y - TILE_HEIGHT;
 			}
-			waitingStartTime = gameTime;
+			self.waitingStartTime = gameTime;
 		}
 	}
 	else if (self.state == ElevatorMovingDown)
@@ -225,16 +225,16 @@
 		else {
 			self.state = ElevatorWaitingForUp;
 			self.y = self.initialY;
-			waitingStartTime = gameTime;
+			self.waitingStartTime = gameTime;
 		}
 	}
 	else if (self.state == ElevatorWaitingForUp || self.state == ElevatorWaitingForDown)
 	{
 		CLogGLU();
 		// When elevator has reached top or bottom, it will wait some time before it starts moving again
-		if (gameTime * 1000 > waitingStartTime * 1000 + ELEVATOR_WAITING_INTERVAL)
+		if (gameTime * 1000 > self.waitingStartTime * 1000 + ELEVATOR_WAITING_INTERVAL)
 		{
-			state = (self.state == ElevatorWaitingForUp) ? ElevatorMovingUp : ElevatorMovingDown;
+			self.state = (self.state == ElevatorWaitingForUp) ? ElevatorMovingUp : ElevatorMovingDown;
 			return NO;
 		}
 	}

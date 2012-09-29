@@ -19,17 +19,14 @@ typedef enum {
 	ElevatorPaused = 5
 } ElevatorState;
 
-@interface ElevatorTile : Tile {
-	World* world;
-	ElevatorTile* halfElevator;
-	ElevatorState state;
-	float lastElevatorUpdate;
-	float waitingStartTime;
-	int initialY;
+@interface ElevatorTile : Tile
+{
+@private
+    float lastElevatorUpdate;
 }
 
 @property (nonatomic, retain) World* world;
-@property (readwrite, assign) ElevatorTile* halfElevator;   // No retain since it's a reference to an element from the world.tilesLayer pointer array
+@property (assign) ElevatorTile* halfElevator;   // No retain since it's a reference to an element from the world.tilesLayer pointer array
 @property ElevatorState state;
 @property int initialY;
 @property float waitingStartTime;

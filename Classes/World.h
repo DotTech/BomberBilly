@@ -21,11 +21,10 @@ typedef enum {
 } Direction;
 
 
-@interface World : NSObject {
-	Tile** tilesLayer;
-	Sprite** enemies;
-	Level** levels;
-	int currentLevelIndex;
+@interface World : NSObject
+{
+@private
+    int currentLevelIndex;
 }
 
 @property Tile** tilesLayer;

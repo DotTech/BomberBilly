@@ -16,15 +16,16 @@ typedef enum {
 	EnemyDead = 3
 } EnemyState;
 
-@interface Enemy : Entity {
-	float lastEnemyUpdateTime;
-	int fallAcceleration;
-    BOOL preventFallingOfBlocks;    // Set to true if enemy must turn around when the edge of a block is reached
-                                    // Otherwise it will just continue walking and fall off
+@interface Enemy : Entity
+{
+@private
+    float lastEnemyUpdateTime;
+    int fallAcceleration;
 }
 
-@property EnemyState state;
-@property BOOL preventFallingOfBlocks;
+@property (nonatomic) EnemyState state;
+@property BOOL preventFallingOfBlocks;  // Set to true if enemy must turn around when the edge of a block is reached
+                                        // Otherwise it will just continue walking and fall off
 
 - (Enemy*) initWithWorld:(World*)w;
 - (void) die;

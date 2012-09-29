@@ -26,7 +26,7 @@
 - (Tile*) initTile:(DrawingFlag)dFlag physicsFlag:(PhysicsFlag)pFlag position:(CGPoint)pos
 {
 	CLog();
-	[super init];
+	self = [super init];
 	
 	if (dFlag != dfDrawNothing)
 	{
@@ -35,7 +35,7 @@
 		[anim release];
 	}
 
-    blinkingFlag = bfNotBlinking;
+    self.blinkingFlag = bfNotBlinking;
 	self.x = pos.x;
 	self.y = pos.y;
 	self.width = TILE_WIDTH;
@@ -84,10 +84,10 @@
 {
 	CLogGL();
 	
-	if (gameTime * 1000 > lastUpdateTime + [[animation get] getCurrentFrameTimeout]) 
+	if (gameTime * 1000 > lastUpdateTime + [[self.animation get] getCurrentFrameTimeout]) 
 	{
 		CLogGLU();
-		[[animation get] setNextFrame];
+		[[self.animation get] setNextFrame];
 		lastUpdateTime = gameTime * 1000;
 	}
     

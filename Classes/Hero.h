@@ -21,16 +21,15 @@ typedef enum {
 	HeroDoneCheering = 8
 } HeroState;
 
-@interface Hero : Entity {
-	float lastHeroUpdateTime;
-	int jumpAcceleration;
-	int jumpedHeight;
-	int walkTowardsX;
-	int bombs;
-	int lifes;
+@interface Hero : Entity
+{
+@private
+    float lastHeroUpdateTime;
+    int jumpAcceleration;
+    int jumpedHeight;
 }
 
-@property HeroState state;
+@property (nonatomic) HeroState state;
 @property int walkTowardsX;
 @property int bombs;
 @property int lifes;

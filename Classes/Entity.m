@@ -19,7 +19,7 @@
 {
 	CLog();
     
-	[super initSprite:spriteName];
+	self = [super initSprite:spriteName];
     self.world = w;
 	
 	return self;

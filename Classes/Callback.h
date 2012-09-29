@@ -8,7 +8,7 @@
 
 
 // Struct that allows us to define callback methods
-typedef struct sCallback {
+typedef struct {
 	id callbackObject;
 	SEL callbackMethod;
 } Callback;

@@ -10,6 +10,7 @@
 #import "GameState.h"
 
 @interface GLESGameState : GameState {
+
 }
 
 - (id) initWithFrame:(CGRect)frame andManager:(GameStateManager*)pManager;

@@ -15,7 +15,7 @@
 - (DebugLevel*) init
 {
 	CLog();
-	[super init];
+	self = [super init];
 	
 	self.startBombs = 10;
 	self.heroSpawnPoint = CGPointMake(15, 480);
@@ -172,10 +172,10 @@
 - (Entity**) getEnemyData:(World*)world
 {
 	CLog();
-	enemyCount = 7;
-	Enemy** enemies = new Enemy*[enemyCount];
+	self.enemyCount = 7;
+	Enemy** enemies = new Enemy*[self.enemyCount];
 	
-	for (int i=0; i<enemyCount; i++) {
+	for (int i=0; i<self.enemyCount; i++) {
 		enemies[i] = [[Enemy alloc] initWithWorld:world];
 	}
 

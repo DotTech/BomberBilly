@@ -20,12 +20,12 @@
 - (Tile*) initSwitch:(Tile**)targetTiles targetsCount:(int)tCount position:(CGPoint)pos setState:(SwitchState)s
 {
 	CLog();
-	[super initTile:dfSwitch physicsFlag:pfSwitchTile position:pos];
+	self = [super initTile:dfSwitch physicsFlag:pfSwitchTile position:pos];
 	
 	self.state = s;
 	self.targets = targetTiles;
 	self.hasBeenSwitched = NO;
-	targetsCount = tCount;
+	self.targetsCount = tCount;
 	
 	// Set correct animation sequence for current state
 	[self updateSequence];

@@ -10,11 +10,10 @@
 
 @implementation AnimationSequence
 
-
-- (AnimationSequence*) initSpriteWithFrames:(NSDictionary*)sequenceData 
+- (AnimationSequence*) initSpriteWithFrames:(NSDictionary*)sequenceData
 {
 	CLog();
-	[super init];
+	self = [super init];
 	
 	NSArray* framesData = (NSArray*)[sequenceData valueForKey:@"frames"];
 	loop = [[sequenceData valueForKey:@"loop"] intValue];
@@ -47,7 +46,7 @@
 - (AnimationSequence*) initTileWithFrames:(NSArray*)framesData loop:(BOOL)l
 {
 	CLog();
-	[super init];
+	self = [super init];
 	
 	currentFrame = 0;
 	maximumFrameSize = CGRectNull;

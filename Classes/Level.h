@@ -13,19 +13,17 @@
 #import "Entity.h"
 #import "Enemy.h"
 
-typedef struct sSwitchParameters {
+typedef struct {
     SwitchState state;
     int* targetTileIndexes;	// Array with indexes of target tiles in tilesLayer array
 	int targetTilesCount;	// Number of elements in targetTileIndexes array
 } SwitchParameters;
 
-@interface Level : NSObject {
-	int worldTileWidth;
-	int worldTileHeight;
-	int worldSize;
-	int startBombs;
-	int enemyCount;
-	CGPoint heroSpawnPoint;
+@interface Level : NSObject
+{
+@private
+    CGPoint heroSpawnPoint;
+    int worldSize;
 }
 
 @property int startBombs;

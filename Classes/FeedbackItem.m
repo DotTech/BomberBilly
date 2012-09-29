@@ -18,7 +18,7 @@
 
 - (FeedbackItem*) initFeedbackItem:(NSString*)feedbackText activationPoint:(CGPoint)aPoint markingPoint:(CGPoint)mPoint
 {
-    [super init];
+    self = [super init];
     
     self.feedback = [[NSString alloc] initWithString:feedbackText];
     self.activateAtPoint = CGPointMake(aPoint.x, aPoint.y);

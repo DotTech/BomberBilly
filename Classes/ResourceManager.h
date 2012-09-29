@@ -18,12 +18,12 @@
 @class ResourceManager;
 extern ResourceManager* resManager;
 
-@interface ResourceManager : NSObject {
-	NSMutableDictionary* textures;
-	NSMutableDictionary* configuration;
-	GLFont* fontDebugData;
-	GLFont* fontMessage;
-	GLFont* fontGameInfo;
+@interface ResourceManager : NSObject
+{
+@private
+    GLFont* fontDebugData;
+    GLFont* fontMessage;
+    GLFont* fontGameInfo;
 }
 
 @property (nonatomic, retain) NSMutableDictionary* textures;

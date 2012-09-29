@@ -23,14 +23,14 @@
 {
 	CLog();
 	
-	[super initSprite:SPRITE_HERO withWorld:w];
+	self = [super initSprite:SPRITE_HERO withWorld:w];
 	[self.animation setSequence:ANIMATION_HERO_IDLE];
 	
 	jumpAcceleration = HERO_JUMP_ACCELERATION;
 	jumpedHeight = 0;
-	walkTowardsX = -1;
-	bombs = 0;
-	lifes = 0;
+	self.walkTowardsX = -1;
+	self.bombs = 0;
+	self.lifes = 0;
 	self.state = HeroIdle;
 	
 	return self;

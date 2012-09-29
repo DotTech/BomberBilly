@@ -21,7 +21,7 @@
 - (Sprite*) initSprite:(NSString*)spriteName
 {
 	CLog();
-	[super init];
+	self = [super init];
 	
 	Animation* anim = [[Animation alloc] initForSprite:spriteName];
 	
@@ -67,16 +67,16 @@
 		CGRect currentFrame = [self getCurrentFrame];
 		int xOffset = 0;
 		
-		if (currentFrame.size.width <= animation.width) {
-			xOffset = animation.width - currentFrame.size.width;
+		if (currentFrame.size.width <= self.animation.width) {
+			xOffset = self.animation.width - currentFrame.size.width;
 			xOffset = xOffset / 2;
 		}
 		
 		// Make drawing point x the center of the sprite
-		xOffset -= animation.width / 2;
+		xOffset -= self.animation.width / 2;
 		
 		// Draw the frame on the OpenGL surface
-		[[resManager getTexture:animation.spriteSheetFileName] 
+		[[resManager getTexture:self.animation.spriteSheetFileName] 
 		 drawInRect:CGRectMake(point.x + xOffset, point.y, currentFrame.size.width, currentFrame.size.height)
 		 withClip:currentFrame withRotation:0 withScale:animation.scale];
 	}
@@ -87,10 +87,10 @@
 {
 	CLogGL();
 	
-	if (gameTime * 1000 > lastUpdateTime + [[animation get] getCurrentFrameTimeout]) 
+	if (gameTime * 1000 > lastUpdateTime + [[self.animation get] getCurrentFrameTimeout]) 
 	{
 		CLogGLU();
-		[[animation get] setNextFrame];
+		[[self.animation get] setNextFrame];
 		lastUpdateTime = gameTime * 1000;
 	}
 }
@@ -99,7 +99,7 @@
 - (CGRect) getCurrentFrame
 {
 	CLogGL();
-	return [[animation get] getCurrentFrame:flipped];
+	return [[self.animation get] getCurrentFrame:flipped];
 }
 
 

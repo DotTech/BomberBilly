@@ -18,20 +18,20 @@
 #import "Hero.h"
 #import "World.h"
 
-@interface GameStateMain : GLESGameState {
-	World* world;
-	Hero* hero;
+@interface GameStateMain : GLESGameState
+{
+@private
     Tile* touchedTile;
-	BOOL restarting;
-	BOOL gameOver;
-	BOOL finished;
-	int lifes;
-	int currentLevel;
+    BOOL restarting;
+    BOOL gameOver;
+    BOOL finished;
+    int lifes;
     float blinkStartTime;
 }
 
 @property (nonatomic, retain) World* world;
 @property (nonatomic, retain) Hero* hero;
+@property int currentLevel;
 
 - (void) initGameObjects:(SEL)callback;
 - (void) render:(BOOL)swapBuffer;

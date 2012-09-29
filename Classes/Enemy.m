@@ -25,12 +25,12 @@
 {
 	CLog();
     
-	[super initSprite:SPRITE_ENEMIES withWorld:w];
+	self = [super initSprite:SPRITE_ENEMIES withWorld:w];
 	[self.animation setSequence:ANIMATION_ENEMY_DEVILCAR];
 	
-    offScreen = NO;
     fallAcceleration = 1;
-    preventFallingOfBlocks = NO;
+    self.preventFallingOfBlocks = NO;
+    self.offScreen = NO;
 	self.state = EnemyFalling;
     
 	return self;
@@ -188,7 +188,7 @@
 		
 		if ([self.animation get].animationEnded) {
 			self.state = EnemyDead;
-			offScreen = YES;
+			self.offScreen = YES;
 			self.x = -100;
 			self.y = -100;
 		}

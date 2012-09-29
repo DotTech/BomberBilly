@@ -26,15 +26,13 @@ typedef enum {
 	SwitchOn = 1
 } SwitchState;
 
-@interface SwitchTile : Tile {
-	Tile** targets;
+@interface SwitchTile : Tile
+{
+@private
     Sprite* tileMarker;
-	SwitchState state;
-	BOOL hasBeenSwitched;
-	int targetsCount;
 }
 
-@property (readwrite, assign) Tile** targets;
+@property (assign) Tile** targets;
 @property SwitchState state;
 @property BOOL hasBeenSwitched;
 @property int targetsCount;

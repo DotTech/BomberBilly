@@ -10,18 +10,18 @@
 #import <UIKit/UIView.h>
 #import "GameStateManager.h"
 
-@interface GameState : UIView {
-	GameStateManager* gameStateManager;
-	
-	// Track touches
-	CGPoint touchPosition;
-	BOOL touching;
-	
-	// Used to keep track of FPS
-	CFTimeInterval fpsLastSecondStart;
-	int fpsFramesThisSecond;
-	int fps;
+@interface GameState : UIView
+{
+@private
+    CGPoint touchPosition;
+    CFTimeInterval fpsLastSecondStart;
+    int fpsFramesThisSecond;
 }
+
+@property (nonatomic, retain) GameStateManager* gameStateManager;
+@property BOOL touching;
+@property (assign) CGPoint touchPosition;
+@property int fps;
 
 - (id) initWithFrame:(CGRect)frame andManager:(GameStateManager*)manager;
 

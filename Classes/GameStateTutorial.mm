@@ -13,7 +13,6 @@
 
 @implementation GameStateTutorial
 
-
 #pragma mark -
 #pragma mark Overrides of GameStateMain methods
 
@@ -23,7 +22,7 @@
 	CLog();
     
     // Force tutorial level to be loaded
-    currentLevel = LEVELINDEX_TUTORIAL;
+    self.currentLevel = LEVELINDEX_TUTORIAL;
     activeFeedbackItem = -1;
     
     // Define all the feedback for the tutorial
@@ -79,7 +78,7 @@
     
     // Cancel touch events when feedback is shown
     if (activeFeedbackItem > -1) {
-        touching = NO;
+        self.touching = NO;
     }
     
     [super handleTouch];
@@ -90,7 +89,7 @@
 {
 	CLog();
     if (moveToNextLevel) {
-        [gameStateManager changeGameState:[GameStateMain class]];
+        [self.gameStateManager changeGameState:[GameStateMain class]];
     }
     else {
         [super restartLevel:NO];
@@ -170,6 +169,8 @@
             currentLine++;
         }
     }
+    
+    [line release];
 }
 
 
@@ -183,7 +184,7 @@
         progress = [progress stringByAppendingString:@"|"];
     }
     
-    return [progress retain];
+    return progress;
 }
 
 

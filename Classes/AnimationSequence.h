@@ -9,14 +9,16 @@
 #import <Foundation/Foundation.h>
 #import "Constants.h"
 
-@interface AnimationSequence : NSObject {
+@interface AnimationSequence : NSObject
+{
+@private
 	CGRect* frames;
-	CGRect maximumFrameSize;
-	int* frameTimeouts;
-	int currentFrame;
-	int frameCount;
-	BOOL loop;
-	int flippedFrameOffsetX;
+    int* frameTimeouts;
+    CGRect maximumFrameSize;
+    int currentFrame;
+    int frameCount;
+    int flippedFrameOffsetX;
+    BOOL loop;
 }
 
 @property (readonly) BOOL animationEnded;

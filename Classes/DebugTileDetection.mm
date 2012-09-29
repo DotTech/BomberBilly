@@ -15,7 +15,7 @@
 - (DebugTileDetection*) init
 {
 	CLog();
-	[super init];
+	self = [super init];
 	
 	self.startBombs = 20;
 	self.heroSpawnPoint = CGPointMake(20, 384);
@@ -73,12 +73,12 @@
   	CLog();
     
     #if !DEBUG_TILE_DETECTION_ENEMIES
-        enemyCount = 0;
+        self.enemyCount = 0;
         return NULL;
     #endif
     
-	enemyCount = 1;
-	Enemy** enemies = new Enemy*[enemyCount];
+	self.enemyCount = 1;
+	Enemy** enemies = new Enemy*[self.enemyCount];
 	
     enemies[0] = [[Enemy alloc] initWithWorld:world];
 	enemies[0].x = 20;

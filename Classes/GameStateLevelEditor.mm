@@ -6,6 +6,7 @@
 //  Copyright 2011 DotTech. All rights reserved.
 //
 
+/*
 #import "GameStateLevelEditor.h"
 
 #define TILE_COUNT 8
@@ -75,3 +76,4 @@
 }
 
 @end
+*/

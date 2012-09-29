@@ -11,12 +11,12 @@
 #import <QuartzCore/QuartzCore.h>
 #import "ResourceManager.h"
 
+@implementation GLESGameState
+
 // Primary context for all OpenGL calls.  Set in setup2D, should be cleared in teardown.
 EAGLContext* glesContext;
 GLuint glesFrameBuffer;
 GLuint glesRenderBuffer;
-
-@implementation GLESGameState
 
 // Override UIView's layerClass method so it returns the right class for OpenGL ES to draw to
 + (Class)layerClass {

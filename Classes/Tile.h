@@ -45,18 +45,11 @@ typedef enum {
     bfEndingNoFading = 5
 } BlinkingFlag;
 
-@interface Tile : NSObject {
-	int width;
-	int height;
-	int x;
-	int y;
-	float lastUpdateTime;
-	PhysicsFlag physicsFlag;
-	DrawingFlag drawingFlag;
-	Animation* animation;
-    
-    float lastBlinkUpdateTime;    
-    BlinkingFlag blinkingFlag;
+@interface Tile : NSObject
+{
+@private
+    float lastUpdateTime;
+    float lastBlinkUpdateTime;
     DrawingFlag drawingFlagBeforeBlink;
 }
 

@@ -57,7 +57,6 @@
 		BAC2F1811312BD51007C86F2 /* sprites_hero.png in Resources */ = {isa = PBXBuildFile; fileRef = BAC2F1801312BD51007C86F2 /* sprites_hero.png */; };
 		BAC2F21A1312C863007C86F2 /* Hero.m in Sources */ = {isa = PBXBuildFile; fileRef = BAC2F2191312C863007C86F2 /* Hero.m */; };
 		BAC2F2301312CA51007C86F2 /* Enemy.m in Sources */ = {isa = PBXBuildFile; fileRef = BAC2F22F1312CA51007C86F2 /* Enemy.m */; };
-		CE7834541617319B004BE356 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE7834531617319B004BE356 /* Default-568h@2x.png */; };
 		CE85B9A916122F3800A33360 /* gameover.png in Resources */ = {isa = PBXBuildFile; fileRef = CE85B9A816122F3800A33360 /* gameover.png */; };
 		CE91557716090A91003C8BD2 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE91557616090A91003C8BD2 /* README.txt */; };
 /* End PBXBuildFile section */
@@ -105,7 +104,6 @@
 		2A8B820C1337E7430008AA85 /* GameStateTutorial.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GameStateTutorial.mm; sourceTree = "<group>"; };
 		2A8B82451337F8500008AA85 /* Callback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Callback.h; sourceTree = "<group>"; };
 		2A8B82461337F8DB0008AA85 /* CallLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallLogging.h; sourceTree = "<group>"; };
-		2A8B82471337FA310008AA85 /* FeedbackItem_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackItem_.h; sourceTree = "<group>"; };
 		2A8C59CD134A33610026A894 /* GameStateMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameStateMenu.h; sourceTree = "<group>"; };
 		2A8C59CE134A33610026A894 /* GameStateMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameStateMenu.m; sourceTree = "<group>"; };
 		2A8C59D0134A37520026A894 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = menu.png; path = Resources/menu.png; sourceTree = "<group>"; };
@@ -154,7 +152,6 @@
 		BAC2F2191312C863007C86F2 /* Hero.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Hero.m; sourceTree = "<group>"; };
 		BAC2F22E1312CA51007C86F2 /* Enemy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Enemy.h; sourceTree = "<group>"; };
 		BAC2F22F1312CA51007C86F2 /* Enemy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Enemy.m; sourceTree = "<group>"; };
-		CE7834531617319B004BE356 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		CE85B9A816122F3800A33360 /* gameover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gameover.png; path = Resources/gameover.png; sourceTree = "<group>"; };
 		CE91557616090A91003C8BD2 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -204,7 +201,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				CE7834531617319B004BE356 /* Default-568h@2x.png */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -305,7 +301,6 @@
 				2A3A35101336AE0D00957806 /* Common.h */,
 				2A8B82451337F8500008AA85 /* Callback.h */,
 				2A8B82461337F8DB0008AA85 /* CallLogging.h */,
-				2A8B82471337FA310008AA85 /* FeedbackItem_.h */,
 				2AB3C00A133D139000C890B6 /* FeedbackItem.h */,
 				2AB3C00B133D139000C890B6 /* FeedbackItem.m */,
 			);
@@ -445,7 +440,6 @@
 				2A8C59D6134A47C00026A894 /* background_leveleditor.png in Resources */,
 				CE91557716090A91003C8BD2 /* README.txt in Resources */,
 				CE85B9A916122F3800A33360 /* gameover.png in Resources */,
-				CE7834541617319B004BE356 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

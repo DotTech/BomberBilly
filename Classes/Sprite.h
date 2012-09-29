@@ -10,13 +10,10 @@
 #import "Animation.h"
 #import "Constants.h"
 
-@interface Sprite : NSObject {
-	Animation* animation;
-	float lastUpdateTime;
-	int x;
-	int y;
-	BOOL flipped;
-	BOOL offScreen;
+@interface Sprite : NSObject
+{
+@private
+    float lastUpdateTime;
 }
 
 @property (nonatomic, retain) Animation* animation;

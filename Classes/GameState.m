@@ -9,15 +9,24 @@
 #import "GameState.h"
 #import "Constants.h"
 
+// TODO: TouchIsInsideRect method
+
 @implementation GameState
 
+@synthesize gameStateManager;
+@synthesize fps;
+@synthesize touching;
+@synthesize touchPosition;
+
+#pragma mark -
+#pragma mark Methods
 
 - (id) initWithFrame:(CGRect)frame andManager:(GameStateManager*)manager
 {
 	CLog();
 	if (self = [super initWithFrame:frame])
 	{
-		gameStateManager = manager;
+		self.gameStateManager = manager;
 		self.userInteractionEnabled = true;
 	}
 	return self;
@@ -55,7 +64,7 @@
 	float timeThisSecond = currTime - fpsLastSecondStart;
 	if (timeThisSecond > 1.0f) {
 		CLogGLU();
-		fps = fpsFramesThisSecond;
+		self.fps = fpsFramesThisSecond;
 		fpsFramesThisSecond = 0;
 		fpsLastSecondStart = currTime;
 	}
@@ -82,14 +91,14 @@
 
 - (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	touching = NO;
+	self.touching = NO;
 }
 
 - (void) catchTouch:(NSSet*)touches
 {
 	UITouch* touch = [touches anyObject];
-	touchPosition = [touch locationInView:self];
-	touching = YES;
+	self.touchPosition = [touch locationInView:self];
+	self.touching = YES;
 	
 	// Touch position starts in the upperleft corner.
 	// This is opposite to the OpenGL draw position that starts in the bottomleft corner.

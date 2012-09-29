@@ -21,10 +21,10 @@
 - (Animation*) initForSprite:(NSString*)spriteSheetFile
 {
 	CLog();
-	[super init];
+	self = [super init];
 	
 	maximumFrameSize = CGRectNull;
-	rotation = 0;
+	self.rotation = 0;
     
 	self.spriteSheetFileName = spriteSheetFile;
 	NSDictionary* pListData = [resManager loadConfigSection:spriteSheetFile];
@@ -38,7 +38,7 @@
 	while (key = [keyEnumerator nextObject]) {
 		// Create animationsequence object and add it to our dictionary
 		NSDictionary* sequenceData = [pListData objectForKey:key];		
-		scale = [[sequenceData valueForKey:@"scale"] floatValue]; 
+		self.scale = [[sequenceData valueForKey:@"scale"] floatValue]; 
 		
 		AnimationSequence* tmp = [[AnimationSequence alloc] initSpriteWithFrames:sequenceData];
 		[sequences setValue:tmp forKey:key];
@@ -58,7 +58,7 @@
 - (Animation*) initForTile:(int)tileNumber
 {
 	CLog();
-	[super init];
+	self = [super init];
 	
 	maximumFrameSize = CGRectNull;
 	
@@ -67,7 +67,7 @@
 	NSDictionary* tileData = [pListData objectAtIndex:tileNumber];
 
 	// Create animationsequence object and add it to our dictionary
-	scale = 1;
+	self.scale = 1;
 	BOOL loop = [[tileData valueForKey:@"loop"] boolValue];
 	
 	// Loop through animation sequences
@@ -150,7 +150,7 @@
 - (AnimationSequence*) get
 {
 	CLogGL();
-	return (AnimationSequence*)[sequences objectForKey:currentSequence];
+	return (AnimationSequence*)[sequences objectForKey:self.currentSequence];
 }
 
 
@@ -161,26 +161,26 @@
 // Takes all sequences into account and also applies scaling
 - (int) width
 {
-	return [self getMaximumFrameSize].size.width * scale;
+	return [self getMaximumFrameSize].size.width * self.scale;
 }
 
 // Maximum height of animation.
 // Takes all sequences into account and also applies scaling
 - (int) height
 {
-	return [self getMaximumFrameSize].size.height * scale;
+	return [self getMaximumFrameSize].size.height * self.scale;
 }
 
 // Maximum width of current animation sequence (with scaling applied)
 - (int) sequenceWidth
 {
-	return [[self get] getMaximumFrameSize].size.width * scale;
+	return [[self get] getMaximumFrameSize].size.width * self.scale;
 }
 
 // Maximum height of current animation sequence (with scaling applied)
 - (int) sequenceHeight
 {
-	return [[self get] getMaximumFrameSize].size.height * scale;
+	return [[self get] getMaximumFrameSize].size.height * self.scale;
 }
 
 @end

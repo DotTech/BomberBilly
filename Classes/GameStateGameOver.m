@@ -23,13 +23,13 @@
 
 - (void) update:(float)gameTime
 {
-	if (touching)
+	if (self.touching)
 	{
 		// Control panel is being touched
-		if ((touchPosition.x >= BOMB_BUTTON.origin.x && touchPosition.x <= BOMB_BUTTON.origin.x + BOMB_BUTTON.size.width) &&
-			(SCREEN_HEIGHT - touchPosition.y >= BOMB_BUTTON.origin.y && SCREEN_HEIGHT - touchPosition.y <= BOMB_BUTTON.origin.y + BOMB_BUTTON.size.height))
+		if ((self.touchPosition.x >= BOMB_BUTTON.origin.x && self.touchPosition.x <= BOMB_BUTTON.origin.x + BOMB_BUTTON.size.width) &&
+			(SCREEN_HEIGHT - self.touchPosition.y >= BOMB_BUTTON.origin.y && SCREEN_HEIGHT - self.touchPosition.y <= BOMB_BUTTON.origin.y + BOMB_BUTTON.size.height))
 		{
-			[gameStateManager changeGameState:[GameStateMain class]];
+			[self.gameStateManager changeGameState:[GameStateMain class]];
 			return;
 		}
 	}

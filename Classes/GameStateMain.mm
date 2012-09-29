@@ -12,13 +12,12 @@
 
 // TODO: 
 // - Somehow the "Loading..." text is not being displayed when initGameObjects is called for the first time
-// - Switching to a new gamestate doesnt work properly when running on the actual hardware (tested only on iPad)
 
 @implementation GameStateMain
 
 @synthesize world;
 @synthesize hero;
-
+@synthesize currentLevel;
 
 - (GameStateMain*) initWithFrame:(CGRect)frame andManager:(GameStateManager*)manager
 {
@@ -32,9 +31,9 @@
         // Note: index 0 is the tile debugging level
         //       index 1 is the tutorial level
         // So the actual game levels start at index 2
-		currentLevel = LEVELINDEX_PLAYLEVELS_START;
+		self.currentLevel = LEVELINDEX_PLAYLEVELS_START;
         #if DEBUG_TILE_DETECTION
-            currentLevel = LEVELINDEX_DEBUGTILES;
+            self.currentLevel = LEVELINDEX_DEBUGTILES;
         #endif
 
 		// Initialize game objects for the first time
@@ -150,7 +149,7 @@
 			[resManager.fontGameInfo drawString:[NSString stringWithFormat:@"%d", self.hero.bombs] atPoint:CGPointMake(113, 5)];
 			[resManager.fontGameInfo drawString:[NSString stringWithFormat:@"%d", self.hero.lifes] atPoint:CGPointMake(268, 5)];
 			if (DEBUG_SHOW_FPS) {
-                [resManager.fontGameInfo drawString:[NSString stringWithFormat:@"FPS:%d", fps] atPoint:CGPointMake(130, 5)];
+                [resManager.fontGameInfo drawString:[NSString stringWithFormat:@"FPS:%d", self.fps] atPoint:CGPointMake(130, 5)];
 			}
 			
 			// Draw world
@@ -163,7 +162,7 @@
 			// We're game over... change gamestate and end the game
 			// TODO: Switching to a new gamestate doesnt work yet when running on the actual hardware
 			//		 For now we'll just restart the game
-			[gameStateManager changeGameState:[GameStateGameOver class]];
+			[self.gameStateManager changeGameState:[GameStateGameOver class]];
 			return;
 		}
 		else if (finished) {
@@ -184,16 +183,16 @@
 {
 	CLogGL();
     
-    if (touching) 
+    if (self.touching)
     {
-        if (touchPosition.y > SCREEN_HEIGHT - SCREEN_WORLD_HEIGHT)
+        if (self.touchPosition.y > SCREEN_HEIGHT - SCREEN_WORLD_HEIGHT)
         {
             // World area is being touched
             // If we are not jumping, falling or dying then we walk
             if (self.hero.state != HeroJumping && self.hero.state != HeroFalling && 
                 self.hero.state != HeroDying && self.hero.state != HeroReachedFinish) 
             {
-                if (touchPosition.x <= SCREEN_WIDTH / 2) {
+                if (self.touchPosition.x <= SCREEN_WIDTH / 2) {
                     self.hero.walkTowardsX = 0;
                 }
                 else {
@@ -205,8 +204,8 @@
         else 
         {
             // Control panel is being touched
-            if ((touchPosition.x >= BOMB_BUTTON.origin.x && touchPosition.x <= BOMB_BUTTON.origin.x + BOMB_BUTTON.size.width) &&
-                (SCREEN_HEIGHT - touchPosition.y >= BOMB_BUTTON.origin.y && SCREEN_HEIGHT - touchPosition.y <= BOMB_BUTTON.origin.y + BOMB_BUTTON.size.height))
+            if ((self.touchPosition.x >= BOMB_BUTTON.origin.x && self.touchPosition.x <= BOMB_BUTTON.origin.x + BOMB_BUTTON.size.width) &&
+                (SCREEN_HEIGHT - self.touchPosition.y >= BOMB_BUTTON.origin.y && SCREEN_HEIGHT - self.touchPosition.y <= BOMB_BUTTON.origin.y + BOMB_BUTTON.size.height))
             {
                 if (gameOver) {
                     currentLevel = 0;
@@ -220,8 +219,8 @@
                     self.hero.state = HeroDroppingBomb;
                 }
             }
-            else if ((touchPosition.x >= KILL_BUTTON.origin.x && touchPosition.x <= KILL_BUTTON.origin.x + KILL_BUTTON.size.width) &&
-                (SCREEN_HEIGHT - touchPosition.y >= KILL_BUTTON.origin.y && SCREEN_HEIGHT - touchPosition.y <= KILL_BUTTON.origin.y + KILL_BUTTON.size.height))
+            else if ((self.touchPosition.x >= KILL_BUTTON.origin.x && self.touchPosition.x <= KILL_BUTTON.origin.x + KILL_BUTTON.size.width) &&
+                (SCREEN_HEIGHT - self.touchPosition.y >= KILL_BUTTON.origin.y && SCREEN_HEIGHT - self.touchPosition.y <= KILL_BUTTON.origin.y + KILL_BUTTON.size.height))
             {
                 // Suicide button is being touched
                 self.hero.state = HeroDying;
@@ -251,20 +250,21 @@
 	
 	if (moveToNextLevel) 
 	{
-		currentLevel++;
-		if (currentLevel >= NUMBER_OF_LEVELS) {
+		self.currentLevel++;
+		if (self.currentLevel >= NUMBER_OF_LEVELS) {
 			// Finished the game
 			// TODO: Implement ending
 			NSLog(@"Game finished");
-			currentLevel = LEVELINDEX_PLAYLEVELS_START;
+			self.currentLevel = LEVELINDEX_PLAYLEVELS_START;
 		}
 	}
 	
 	[hero release];
 	[self initGameObjects:@selector(loadingStatusUpdate:)];
+    
 	self.hero.lifes = lifes;
+    
 	finished = NO;
-	
 	restarting = NO;
 }
 
@@ -289,12 +289,12 @@
 
 - (BOOL) blinkSwitchTarget:(float)gameTime
 {
-    if (touching && touchedTile == NULL)
+    if (self.touching && touchedTile == NULL)
     {
-        if (touchPosition.y > SCREEN_HEIGHT - SCREEN_WORLD_HEIGHT)
+        if (self.touchPosition.y > SCREEN_HEIGHT - SCREEN_WORLD_HEIGHT)
         {
-            int touchingDataRow = floor((double)(SCREEN_HEIGHT - touchPosition.y) / TILE_HEIGHT);
-            int touchingDataColumn = floor((double)(touchPosition.x / TILE_WIDTH));
+            int touchingDataRow = floor((double)(SCREEN_HEIGHT - self.touchPosition.y) / TILE_HEIGHT);
+            int touchingDataColumn = floor((double)(self.touchPosition.x / TILE_WIDTH));
             int tileIndex = CoordsToIndex(touchingDataColumn, touchingDataRow);
             touchedTile = [self.world.tilesLayer[tileIndex] retain];
             
@@ -307,13 +307,13 @@
                 }
                 
                 blinkStartTime = gameTime * 1000;
-                touching = NO;
+                self.touching = NO;
                 
                 return YES;
             }
         }
     }
-    else if (!touching && touchedTile != NULL)
+    else if (!self.touching && touchedTile != NULL)
     {
         if (gameTime * 1000 > blinkStartTime + SWITCH_TARGETMARKER_DURATION * 1000)
         {

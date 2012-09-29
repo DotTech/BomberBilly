@@ -6,6 +6,7 @@
 //  Copyright 2011 DotTech. All rights reserved.
 //
 
+/*
 #import <Foundation/Foundation.h>
 #import <CoreMotion/CMMotionManager.h>
 #import "ResourceManager.h"
@@ -18,3 +19,4 @@
 }
 
 @end
+*/

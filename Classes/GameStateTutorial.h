@@ -14,13 +14,15 @@
 #import "FeedbackItem.h"
 
 
-@interface GameStateTutorial : GameStateMain {
+@interface GameStateTutorial : GameStateMain
+{
+@private
     FeedbackItem** feedbackItems;
     int activeFeedbackItem;
     int feedbackItemCount;
     GLFont* fontFeedback;
     GLFont* fontFeedbackBg;
-	float secondsUntilFeedbackHide;
+    float secondsUntilFeedbackHide;
     float feedbackActivationTime;
 }
 

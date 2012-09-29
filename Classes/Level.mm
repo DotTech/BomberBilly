@@ -20,11 +20,11 @@
 - (Level*) init
 {
 	CLog();
-	[super init];
+	self = [super init];
 
-	worldTileWidth = (SCREEN_WIDTH / TILE_WIDTH);
-	worldTileHeight =  (SCREEN_WORLD_HEIGHT / TILE_HEIGHT);
-	worldSize = worldTileWidth * worldTileHeight;	
+	self.worldTileWidth = (SCREEN_WIDTH / TILE_WIDTH);
+	self.worldTileHeight =  (SCREEN_WORLD_HEIGHT / TILE_HEIGHT);
+	worldSize = self.worldTileWidth * self.worldTileHeight;	
 	
 	return self;
 }
@@ -40,7 +40,7 @@
 	Tile** tilesLayer = new Tile*[worldSize];
 	int switchCounter = 0;
 	int progressCounter = 0;
-	int totalIterations = worldTileHeight * worldTileWidth * 2;
+	int totalIterations = worldSize * 2;
 	
 	// Loop through level definition twice.
 	// First we allocate all tiles that are not of the type pfSwitchTile.
@@ -48,8 +48,8 @@
 	// This is necessary because Switches need a reference to a target tile, which otherwise may not exist yet.
 	for (int loop=0; loop<2; loop++)
 	{
-		for (int y=0; y<worldTileHeight; y++) {
-			for (int x=0; x<worldTileWidth; x++) 
+		for (int y=0; y<self.worldTileHeight; y++) {
+			for (int x=0; x<self.worldTileWidth; x++) 
 			{
 				int tileIndex = CoordsToIndex(x, y);
 				

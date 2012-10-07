@@ -308,24 +308,26 @@
 		CLogGLU();
 		int widthOffset = self.animation.sequenceWidth / 2;
 		int addToX = 0;
-		BOOL hittingPlatform = NO;
-		Tile* platform = NULL;
+		BOOL hittingPlatform = NO;      // Wether Hero will hit a platform on the side if he moves
+		Tile* platformOnSide = NULL;    // The platform that is on the side of Hero in the direction that he is walking to
+        Tile* currentTile = [self.world nearestPlatform:self inDirection:None];    // The tile that is currently right underneath Hero
+        
 		
 		// Find nearest platform in the direction the sprite is moving in
 		// Define wether or not it's close enough to hit
 		if (!self.flipped && self.x + widthOffset + HERO_WALK_ACCELERATION < SCREEN_WIDTH) 
 		{
 			// Try to move hero to the right
-			platform = [self.world nearestPlatform:self inDirection:Right];
+			platformOnSide = [self.world nearestPlatform:self inDirection:Right];
 			addToX = HERO_WALK_ACCELERATION;
-			hittingPlatform = (platform != NULL && self.x + widthOffset + HERO_WALK_ACCELERATION > platform.x);
+			hittingPlatform = (platformOnSide != NULL && self.x + widthOffset + HERO_WALK_ACCELERATION > platformOnSide.x);
 		}
 		else if (self.flipped && self.x - widthOffset - HERO_WALK_ACCELERATION > 0) 
 		{
 			// Try to move hero to the left
-			platform = [self.world nearestPlatform:self inDirection:Left];
+			platformOnSide = [self.world nearestPlatform:self inDirection:Left];
 			addToX = -HERO_WALK_ACCELERATION;
-			hittingPlatform = (platform != NULL && self.x - widthOffset - HERO_WALK_ACCELERATION < platform.x + TILE_WIDTH);
+			hittingPlatform = (platformOnSide != NULL && self.x - widthOffset - HERO_WALK_ACCELERATION < platformOnSide.x + TILE_WIDTH);
 		}
 		else {
 			// Screen boundaries reached, dont move any further
@@ -334,34 +336,40 @@
 		
 		// See what kind of platform we're hitting and update hero's self.state
 		// Maybe move this part to a seperate method as it's also used during "fall" in slightly different manner
-		if (!hittingPlatform || platform.physicsFlag == pfNoTile) {
-			// Not hitting anything
-			self.x += addToX;
+		if (!hittingPlatform || platformOnSide.physicsFlag == pfNoTile)
+        {
+			// Not hitting anything on the sides.
+            // Check if we're not on top of a OneWay tile while trying to move in opposite direction
+            BOOL wrongDirection = (currentTile.physicsFlag == pfOneWayLeftToRight && self.flipped)
+                                    || (currentTile.physicsFlag == pfOneWayRightToLeft && !self.flipped);
+        
+            if (!wrongDirection) {
+                self.x += addToX;
+            }
 		}
-		else if (platform.physicsFlag == pfSwitchTile) {
+		else if (platformOnSide.physicsFlag == pfSwitchTile) {
 			// Hitting switch tile
-			[(SwitchTile*)platform toggleSwitch];
+			[(SwitchTile*)platformOnSide toggleSwitch];
 			self.x += addToX;
 		}
-		else if (platform.physicsFlag == pfDeadlyTile && !DEBUG_DEADLYTILES_DONT_KILL) {
+		else if (platformOnSide.physicsFlag == pfDeadlyTile && !DEBUG_DEADLYTILES_DONT_KILL) {
 			// Hitting something deadly
 			self.state = HeroDying;
 		}			
-		else if (platform.physicsFlag == pfBombTile) {
+		else if (platformOnSide.physicsFlag == pfBombTile) {
 			// Hitting a bomb, add it to inventory
-			[self takeBomb:platform];
+			[self takeBomb:platformOnSide];
 			self.x += addToX;
 		}
-		else if (platform.physicsFlag == pfFinishTile) {
+		else if (platformOnSide.physicsFlag == pfFinishTile) {
 			// Reached the finish of the level
 			self.state = HeroReachedFinish;
 			self.x += addToX;
 		}
-        else if (platform.physicsFlag == pfOneWayLeftToRight && !self.flipped) {
+        else if ((platformOnSide.physicsFlag == pfOneWayLeftToRight && !self.flipped)
+                 || (platformOnSide.physicsFlag == pfOneWayRightToLeft && self.flipped))
+        {
             self.x += addToX;
-        }
-        else if (platform.physicsFlag == pfOneWayRightToLeft && self.flipped) {
-            self.x -= addToX;
         }
 	}
 }

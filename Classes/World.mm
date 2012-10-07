@@ -142,6 +142,12 @@
 		int i = CoordsToIndex(leftX, sprite.dataRow);
 		return tilesLayer[i];
 	}
+    
+    if (direction == None)
+    {
+		int i = CoordsToIndex(sprite.dataColumn, sprite.dataRow);
+		return tilesLayer[i];
+    }
 	
 	return NULL;
 }

@@ -70,7 +70,7 @@
 #define TILE_WIDTH 32
 #define TILE_HEIGHT 32
 #define TILE_BLINKING_INTERVAL 50
-#define SWITCH_TARGETMARKER_DURATION 1.0f   // How long to mark target tiles before executing the switch action (seconds)
+#define SWITCH_TARGETMARKER_DURATION 0.5   // How long to mark target tiles before executing the switch action (seconds)
 
 // Level parameters
 #define NUMBER_OF_LEVELS 5          // This includes the tiledebug and tutorial level
@@ -85,7 +85,7 @@
 
 // Debugging options
 #define DEBUG_ENEMIES_DONT_KILL 0       // Disables enemy kill ability
-#define DEBUG_DEADLYTILES_DONT_KILL 0   // Disabled deadly tiles kill ability
+#define DEBUG_DEADLYTILES_DONT_KILL 0   // Disables deadly tiles kill ability
 #define DEBUG_SHOW_FPS 0                // Display frames-per-second counter
 #define DEBUG_ENABLE_CALL_LOGGING 0     // See CallLogging.h for explanation
 #define DEBUG_ENABLE_CALL_LOGGING_GAMELOOP_ALL 0

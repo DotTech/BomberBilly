@@ -31,7 +31,7 @@
         // Note: index 0 is the tile debugging level
         //       index 1 is the tutorial level
         // So the actual game levels start at index 2
-		self.currentLevel = LEVELINDEX_PLAYLEVELS_START;
+		self.currentLevel = 5; //LEVELINDEX_PLAYLEVELS_START;
         #if DEBUG_TILE_DETECTION
             self.currentLevel = LEVELINDEX_DEBUGTILES;
         #endif
@@ -111,8 +111,11 @@
 	
 	if (!restarting)
 	{
-        [self blinkSwitchTarget:gameTime];
-		[self handleTouch];
+        if (![self blinkSwitchTarget:gameTime]) {
+            // Touch is only handled if we're not touching a switch tile
+            [self handleTouch];
+        }
+        
 		[self.world update:gameTime];
 		[self.hero update:gameTime];
 		
@@ -160,8 +163,6 @@
 		}
 		else if (gameOver) {
 			// We're game over... change gamestate and end the game
-			// TODO: Switching to a new gamestate doesnt work yet when running on the actual hardware
-			//		 For now we'll just restart the game
 			[self.gameStateManager changeGameState:[GameStateGameOver class]];
 			return;
 		}
@@ -306,14 +307,12 @@
                     [switchTile.targets[i] startTileBlinking:NO];
                 }
                 
-                blinkStartTime = gameTime * 1000;
-                self.touching = NO;
-                
+                blinkStartTime = gameTime * 1000;               
                 return YES;
             }
         }
     }
-    else if (!self.touching && touchedTile != NULL)
+    else if (touchedTile != NULL)
     {
         if (gameTime * 1000 > blinkStartTime + SWITCH_TARGETMARKER_DURATION * 1000)
         {
@@ -329,8 +328,10 @@
             [touchedTile release];
             touchedTile = NULL;
         }
-    }
         
+        return YES;
+    }
+    
     return NO;
 }
 

@@ -357,6 +357,12 @@
 			self.state = HeroReachedFinish;
 			self.x += addToX;
 		}
+        else if (platform.physicsFlag == pfOneWayLeftToRight && !self.flipped) {
+            self.x += addToX;
+        }
+        else if (platform.physicsFlag == pfOneWayRightToLeft && self.flipped) {
+            self.x -= addToX;
+        }
 	}
 }
 

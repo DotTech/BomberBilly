@@ -20,7 +20,9 @@ typedef enum {
 	pfElevatorTile = 7,
 	pfElevatorHalfTile = 1007,	// When an elevator is moving, it can occupy 2 elements at once in the data array.
                                 // In this case one of them (the one containing least part of the elevator) is pfElevatorHalfTile
-	pfSwitchTile = 8
+	pfSwitchTile = 8,
+    pfOneWayLeftToRight = 9,
+    pfOneWayRightToLeft = 10
 } PhysicsFlag;
 
 typedef enum {
@@ -33,7 +35,8 @@ typedef enum {
 	dfExitDoor = 6,
 	dfElevator = 7,
 	dfSwitch = 8,
-    dfYellowRectangle = 9
+    dfOneWayLeftToRight = 9,
+    dfOneWayRightToLeft = 10
 } DrawingFlag;
 
 typedef enum {

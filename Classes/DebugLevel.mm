@@ -32,20 +32,20 @@
 	
     // DrawingFlag values
     // 0:dfDrawNothing, 1:dfIndestructibleBlock, 2:dfDestructibleBlock, 3:dfJumpBlock, 4:dfDynamite, 5:dfSpikes
-    // 6:dfExitDoor, 7:dfElevator, 8:dfSwitch
+    // 6:dfExitDoor, 7:dfElevator, 8:dfSwitch, 9:dfOneWayLeftToRight, 10:dfOneWayRightToLeft
 	int drawData[13][10] = {
+		{ 0, 0, 0, 0, 9, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 9, 0, 0, 0, 0, 0 },
+		{ 1, 1, 3, 1, 1, 1, 1, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0,10, 0, 1, 1 },
+		{ 0, 0, 0, 0, 0, 0,10, 0, 1, 0 },
+		{ 0, 0, 0, 0, 0, 0,10, 0, 1, 0 },
+		{ 0, 0, 0, 0, 0, 0,10, 0, 1, 0 },
+		{ 0, 0, 0, 0, 0, 0,10, 0, 1, 0 },
+		{ 2, 2, 2, 1, 1, 1, 1, 1, 1, 0 },
+		{ 9, 9, 9, 0, 0, 0, 0, 0, 0, 0 },
+		{ 1, 1, 1, 1, 0, 0, 0, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-		{ 0, 9, 8, 8,10, 8, 0, 0, 0, 4 },
-		{ 2, 2, 1, 2, 5, 1, 1, 5, 5, 2 },
-		{ 0, 8,10, 0, 0, 0, 0, 0, 0, 0 },
-		{ 2, 2, 2, 2, 7, 2, 1, 0, 0, 0 },
-		{ 0, 8, 0, 0, 0, 8, 1, 2, 2, 0 },
-		{ 1, 1, 5, 5, 5, 5, 1, 0, 0, 0 },
-		{ 0, 0, 0, 0, 0, 0, 1, 0, 1, 1 },
-		{ 2, 2, 2, 2, 2, 2, 1, 0, 0, 0 },
-		{ 5, 5, 5, 5, 5, 5, 1, 1, 1, 1 },
-		{ 0, 0, 0, 0, 0, 0, 0, 8, 0, 6 },
 		{ 2, 2, 2, 3, 2, 2, 2, 2, 2, 2 }
 	};
 	
@@ -54,20 +54,20 @@
 	
     // PhysicFlag values
     // 0:pfNoTile, 1:pfIndestructibleTile, 2:pfDestructibleTile, 3:pfJumpTile, 4:pfBombTile, 5:pfDeadlyTile
-    // 6:pfFinishTile, 7:pfElevatorTile, 8:pfSwitchTile
+    // 6:pfFinishTile, 7:pfElevatorTile, 8:pfSwitchTile, 9:pfOneWayLeftToRight, 10:pfOneWayRightToLeft
 	int physicsData[13][10] = {
+		{ 0, 0, 0, 0, 9, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 9, 0, 0, 0, 0, 0 },
+		{ 1, 1, 3, 1, 1, 1, 1, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0,10, 0, 1, 1 },
+		{ 0, 0, 0, 0, 0, 0,10, 0, 1, 0 },
+		{ 0, 0, 0, 0, 0, 0,10, 0, 1, 0 },
+		{ 0, 0, 0, 0, 0, 0,10, 0, 1, 0 },
+		{ 0, 0, 0, 0, 0, 0,10, 0, 1, 0 },
+		{ 2, 2, 2, 1, 1, 1, 1, 1, 1, 0 },
+		{ 9, 9, 9, 0, 0, 0, 0, 0, 0, 0 },
+		{ 1, 1, 1, 1, 0, 0, 0, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-		{ 0, 9, 8, 8,10, 8, 0, 0, 0, 4 },
-		{ 2, 2, 1, 2, 5, 1, 1, 5, 5, 2 },
-		{ 0, 8,10, 0, 0, 0, 0, 0, 0, 0 },
-		{ 2, 2, 2, 2, 7, 2, 1, 0, 0, 0 },
-		{ 0, 8, 0, 0, 0, 8, 1, 2, 2, 0 },
-		{ 1, 1, 5, 5, 5, 5, 1, 0, 0, 0 },
-		{ 0, 0, 0, 0, 0, 0, 1, 0, 1, 1 },
-		{ 2, 2, 2, 2, 2, 2, 1, 0, 0, 0 },
-		{ 5, 5, 5, 5, 5, 5, 1, 1, 1, 1 },
-		{ 0, 0, 0, 0, 0, 0, 0, 8, 0, 6 },
 		{ 2, 2, 2, 3, 2, 2, 2, 2, 2, 2 }
 	};
 	
@@ -80,7 +80,61 @@
 	return [self createTilesLayer:world physicsData:physicsData drawingData:drawData switchesParams:sParams progressCallback:callback];
 }
 
+/*
+ - (Tile**) getTilesData:(World*)world progressCallback:(Callback)callback
+ {
+ CLog();
+ 
+// DrawingFlag values
+// 0:dfDrawNothing, 1:dfIndestructibleBlock, 2:dfDestructibleBlock, 3:dfJumpBlock, 4:dfDynamite, 5:dfSpikes
+// 6:dfExitDoor, 7:dfElevator, 8:dfSwitch
+int drawData[13][10] = {
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 9, 8, 8,10, 8, 0, 0, 0, 4 },
+    { 2, 2, 1, 2, 5, 1, 1, 5, 5, 2 },
+    { 0, 8,10, 0, 0, 0, 0, 0, 0, 0 },
+    { 2, 2, 2, 2, 7, 2, 1, 0, 0, 0 },
+    { 0, 8, 0, 0, 0, 8, 1, 2, 2, 0 },
+    { 1, 1, 5, 5, 5, 5, 1, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 1, 0, 1, 1 },
+    { 2, 2, 2, 2, 2, 2, 1, 0, 0, 0 },
+    { 5, 5, 5, 5, 5, 5, 1, 1, 1, 1 },
+    { 0, 0, 0, 0, 0, 0, 0, 8, 0, 6 },
+    { 2, 2, 2, 3, 2, 2, 2, 2, 2, 2 }
+};
 
+
+// PhysicFlag values
+// 0:pfNoTile, 1:pfIndestructibleTile, 2:pfDestructibleTile, 3:pfJumpTile, 4:pfBombTile, 5:pfDeadlyTile
+// 6:pfFinishTile, 7:pfElevatorTile, 8:pfSwitchTile
+int physicsData[13][10] = {
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 9, 8, 8,10, 8, 0, 0, 0, 4 },
+    { 2, 2, 1, 2, 5, 1, 1, 5, 5, 2 },
+    { 0, 8,10, 0, 0, 0, 0, 0, 0, 0 },
+    { 2, 2, 2, 2, 7, 2, 1, 0, 0, 0 },
+    { 0, 8, 0, 0, 0, 8, 1, 2, 2, 0 },
+    { 1, 1, 5, 5, 5, 5, 1, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 1, 0, 1, 1 },
+    { 2, 2, 2, 2, 2, 2, 1, 0, 0, 0 },
+    { 5, 5, 5, 5, 5, 5, 1, 1, 1, 1 },
+    { 0, 0, 0, 0, 0, 0, 0, 8, 0, 6 },
+    { 2, 2, 2, 3, 2, 2, 2, 2, 2, 2 }
+};
+
+
+// Define how the switch tiles will behave
+SwitchParameters* sParams = [self defineSwitches];
+
+
+// Create the tile objects
+return [self createTilesLayer:world physicsData:physicsData drawingData:drawData switchesParams:sParams progressCallback:callback];
+}
+*/
+
+/*
 // Define how the switches in this level behave
 - (SwitchParameters*) defineSwitches
 {
@@ -166,8 +220,9 @@
 	
 	return sParams;
 }
+*/
 
-
+/*
 // Initialize the enemy sprites for this level
 - (Entity**) getEnemyData:(World*)world
 {
@@ -192,5 +247,5 @@
 	
 	return enemies;
 }
-
+*/
 @end

@@ -15,7 +15,7 @@
 
 TODO for release in App Store:
 ------------------------------
-- [new] New tile: partly penetrable tile, which allows you to walk through from
+x [new] New tile: partly penetrable tile, which allows you to walk through from
 		one side, but not from another side
 - [new] Slow scrolling background image
 - [bug] Loading screen is not showing at initial load, only after level restarts

@@ -204,7 +204,8 @@
 		Tile* platform = [self.world nearestPlatform:self inDirection:Down];
 		int platformY = SCREEN_HEIGHT - SCREEN_WORLD_HEIGHT - TILE_HEIGHT;
 		
-		if (platform != NULL && platform.physicsFlag != pfNoTile && platform.physicsFlag != pfElevatorHalfTile) {
+		if (platform != NULL && platform.physicsFlag != pfNoTile && platform.physicsFlag != pfElevatorHalfTile && platform.physicsFlag != pfOneWayLeftToRight && platform.physicsFlag != pfOneWayRightToLeft)
+        {
 			platformY = platform.y + TILE_HEIGHT;
 		}
 		

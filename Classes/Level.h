@@ -32,6 +32,7 @@ typedef struct {
 @property int worldTileWidth;
 @property int worldTileHeight;
 @property (readonly) int worldTileCount;
+@property (retain) NSString* backgroundImage;
 
 - (Tile**) getTilesData:(World*)world progressCallback:(Callback)callback;
 - (SwitchParameters*) defineSwitches;

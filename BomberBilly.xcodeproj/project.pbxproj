@@ -59,6 +59,7 @@
 		BAC2F2301312CA51007C86F2 /* Enemy.m in Sources */ = {isa = PBXBuildFile; fileRef = BAC2F22F1312CA51007C86F2 /* Enemy.m */; };
 		CE85B9A916122F3800A33360 /* gameover.png in Resources */ = {isa = PBXBuildFile; fileRef = CE85B9A816122F3800A33360 /* gameover.png */; };
 		CE91557716090A91003C8BD2 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE91557616090A91003C8BD2 /* README.txt */; };
+		CE92AB261624817200A53D3C /* background_stars.png in Resources */ = {isa = PBXBuildFile; fileRef = CE92AB251624817200A53D3C /* background_stars.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -154,6 +155,7 @@
 		BAC2F22F1312CA51007C86F2 /* Enemy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Enemy.m; sourceTree = "<group>"; };
 		CE85B9A816122F3800A33360 /* gameover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gameover.png; path = Resources/gameover.png; sourceTree = "<group>"; };
 		CE91557616090A91003C8BD2 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		CE92AB251624817200A53D3C /* background_stars.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = background_stars.png; path = Resources/background_stars.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -323,6 +325,7 @@
 		2AF01F9E132E920C007C3713 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				CE92AB251624817200A53D3C /* background_stars.png */,
 				CE85B9A816122F3800A33360 /* gameover.png */,
 				2A8C59D5134A47C00026A894 /* background_leveleditor.png */,
 				2A8C59D0134A37520026A894 /* menu.png */,
@@ -440,6 +443,7 @@
 				2A8C59D6134A47C00026A894 /* background_leveleditor.png in Resources */,
 				CE91557716090A91003C8BD2 /* README.txt in Resources */,
 				CE85B9A916122F3800A33360 /* gameover.png in Resources */,
+				CE92AB261624817200A53D3C /* background_stars.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

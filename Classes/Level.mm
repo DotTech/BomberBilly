@@ -15,7 +15,7 @@
 @synthesize heroSpawnPoint;
 @synthesize worldTileWidth;
 @synthesize worldTileHeight;
-
+@synthesize backgroundImage;
 
 - (Level*) init
 {
@@ -23,7 +23,9 @@
 	self = [super init];
 
 	self.worldTileWidth = (SCREEN_WIDTH / TILE_WIDTH);
-	self.worldTileHeight =  (SCREEN_WORLD_HEIGHT / TILE_HEIGHT);
+	self.worldTileHeight = (SCREEN_WORLD_HEIGHT / TILE_HEIGHT);
+    self.backgroundImage = [[NSString alloc] initWithString:BACKGROUND_DEFAULT];
+    
 	worldSize = self.worldTileWidth * self.worldTileHeight;	
 	
 	return self;

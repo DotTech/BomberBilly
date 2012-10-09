@@ -12,7 +12,7 @@
 #define SPRITE_HERO @"sprites_hero.png"         // Sprite sheet file for hero animations
 #define SPRITE_ENEMIES @"sprites_enemies.png"   // Sprite sheet file for enemy animations
 #define TILES @"tiles.png"                      // Tile sheet file
-#define BACKGROUND @"background.png"            // Game world background
+#define BACKGROUND_DEFAULT @"background.png"    // Default game world background
 #define TILE_MARKER @"tilemarker.png"         
 #define BACKGROUND_GAMEOVER @"gameover.png"
 #define BACKGROUND_FINISHED @"finished.png"
@@ -71,6 +71,7 @@
 #define TILE_HEIGHT 32
 #define TILE_BLINKING_INTERVAL 50
 #define SWITCH_TARGETMARKER_DURATION 0.5   // How long to mark target tiles before executing the switch action (seconds)
+#define BACKGROUND_UPDATE_INTERVAL 30
 
 // Level parameters
 #define NUMBER_OF_LEVELS 5          // This includes the tiledebug and tutorial level

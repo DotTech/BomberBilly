@@ -27,7 +27,7 @@
 		// Create game world. We only need to initialize it once!
 		self.world = [[World alloc] init];
 		
-        // Set the starting level
+        // Set the starting level (levels are defined in World.mm)
         // Note: index 0 is the tile debugging level
         //       index 1 is the tutorial level
         // So the actual game levels start at index 2
@@ -141,25 +141,23 @@
 	
 	// Clear anything left over from the last frame, and set background color.
 	glClear(GL_COLOR_BUFFER_BIT);
-	
-	[[resManager getTexture:BACKGROUND] drawInRect:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-	
+    
 	if (!restarting)
 	{
 		if (!gameOver && !finished)
 		{
+			// Draw world
+			[self.world draw];
+			
+			// Draw hero sprite
+			[self.hero draw];
+            
 			// Draw text data (bomb/life count)
 			[resManager.fontGameInfo drawString:[NSString stringWithFormat:@"%d", self.hero.bombs] atPoint:CGPointMake(113, 5)];
 			[resManager.fontGameInfo drawString:[NSString stringWithFormat:@"%d", self.hero.lifes] atPoint:CGPointMake(268, 5)];
 			if (DEBUG_SHOW_FPS) {
                 [resManager.fontGameInfo drawString:[NSString stringWithFormat:@"FPS:%d", self.fps] atPoint:CGPointMake(130, 5)];
 			}
-			
-			// Draw world
-			[self.world draw];
-			
-			// Draw hero sprite
-			[self.hero draw];
 		}
 		else if (gameOver) {
 			// We're game over... change gamestate and end the game

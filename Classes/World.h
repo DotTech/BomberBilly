@@ -26,6 +26,8 @@ typedef enum {
 {
 @private
     int currentLevelIndex;
+    int backgroundOffset;
+    int lastUpdateTime;
 }
 
 @property Tile** tilesLayer;
@@ -38,6 +40,7 @@ typedef enum {
 - (Tile**) platformsToBomb:(Sprite*)sprite;
 - (void) update:(float)gameTime;
 - (void) draw;
+- (void) drawBackground;
 - (void) drawDebugMessage;
 
 #if DEBUG_TILE_DETECTION

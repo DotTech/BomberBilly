@@ -246,6 +246,13 @@
 {
 	CLogGL();
 	
+    // Update background
+    if (gameTime * 1000 > lastUpdateTime + BACKGROUND_UPDATE_INTERVAL)
+	{
+        
+		lastUpdateTime = gameTime * 1000;
+	}
+    
 	// Update world tiles
 	for (int y=0; y<SCREEN_WORLD_HEIGHT/TILE_HEIGHT; y++) {
 		for (int x=0; x<SCREEN_WIDTH/TILE_WIDTH; x++) 
@@ -268,6 +275,8 @@
 {
 	CLogGL();
 	
+    [self drawBackground];
+
 	// Draw world tiles
 	for (int y=0; y<SCREEN_WORLD_HEIGHT/TILE_HEIGHT; y++) {
 		for (int x=0; x<SCREEN_WIDTH/TILE_WIDTH; x++) 
@@ -286,6 +295,13 @@
 	
 	// Draw message if this is a debugging level
 	[self drawDebugMessage];
+}
+
+
+- (void) drawBackground
+{
+    // Draw world background
+    [[resManager getTexture:self.currentLevel.backgroundImage] drawInRect:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
 }
 
 

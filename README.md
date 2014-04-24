@@ -14,10 +14,14 @@ Should work from iOS 4.3 up until the latest version.
 
 **Check out the game play demo:** https://www.youtube.com/watch?v=ZyyTdjWcgM0  
 
+------------------
+
 **Created by Ruud van Falier**  
 E-mail: ruud.vanfalier@gmail.com  
 Twitter: BrruuD  
 LinkedIn: http://nl.linkedin.com/in/ruudvanfalier  
+
+------------------
 
 ### TODO's:
 - [new] Slow scrolling background image  
@@ -33,7 +37,9 @@ LinkedIn: http://nl.linkedin.com/in/ruudvanfalier
         Post score to online highscore list  
         Sharing option for scores
 
+------------------
 
+## Version history
 
 ### Version: 0.0.4 (2012-09-25)
 

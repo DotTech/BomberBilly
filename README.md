@@ -6,10 +6,11 @@
 ------------------------------------------------------------------------------------
  Created by Ruud van Falier
 
- E-mail:    ruud.vanfalier@gmail.com
- Twitter:   BrruuD
- LinkedIn:  http://nl.linkedin.com/in/ruudvanfalier
- Blog:      http://ruuddottech.blogspot.com
+ E-mail: ruud.vanfalier@gmail.com  
+ Twitter: BrruuD  
+ LinkedIn: http://nl.linkedin.com/in/ruudvanfalier  
+ 
+ *Gameplay Demo: https://www.youtube.com/watch?v=ZyyTdjWcgM0*
 ====================================================================================
 
 
@@ -87,66 +88,66 @@ For future release notes only the changes will be documented.
 
 Game mechanics and features:
 -----------------------------
-- GameStateMain is the state that hold the actual game code
-  * it manages the World instance
-  * it manages the Hero (player) instance
+- GameStateMain is the state that hold the actual game code  
+  * it manages the World instance  
+  * it manages the Hero (player) instance  
   
-- The World object:
-  * defines which Level classes are available
-  * handles creation of level instances
-  * manages the enemy instanes
-  * provides tile detection
-  * initiates the update and rendering for all game objects
+- The World object:  
+  * defines which Level classes are available  
+  * handles creation of level instances  
+  * manages the enemy instanes  
+  * provides tile detection  
+  * initiates the update and rendering for all game objects  
   
-- Level definition classes:
-  * inherit from the base Level class
-  * define which tiles are drawn
-  * define how these tiles behave
-  * define which tiles are targeted by specific switches
-  * create enemies instances
-  * create tile instances
-
-- We support tiles that are:
-  * destructible (can be destroyed with bombs)
-  * indestructible
-  * jumping platforms (make player jump when walked over)
-  * bombs (can be picked up by player)
-  * deadly (kill the player and enemies)
-  * finish (mark the end of a level)
-  * elevators (tiles that move up and down and allow the player to stand on them)
-  * switches (can be switched on/off and change the state of target tiles)
+- Level definition classes:  
+  * inherit from the base Level class  
+  * define which tiles are drawn  
+  * define how these tiles behave  
+  * define which tiles are targeted by specific switches  
+  * create enemies instances  
+  * create tile instances  
+  
+- We support tiles that are:  
+  * destructible (can be destroyed with bombs)  
+  * indestructible  
+  * jumping platforms (make player jump when walked over)  
+  * bombs (can be picked up by player)  
+  * deadly (kill the player and enemies)  
+  * finish (mark the end of a level)  
+  * elevators (tiles that move up and down and allow the player to stand on them)  
+  * switches (can be switched on/off and change the state of target tiles)  
   
-- Hero (player) can:
-  * walk left and right
-  * jump
-  * fall 
+- Hero (player) can:  
+  * walk left and right  
+  * jump  
+  * fall  
   * drop bomb (drops a bomb and destroys destructible tiles to the immediate left, 
-    right and bottom of the player)
-  * die
-  * cheer (when he reached the end he makes does happy dance)
-  * detect if it collides with any enemies
+    right and bottom of the player)  
+  * die  
+  * cheer (when he reached the end he makes does happy dance)  
+  * detect if it collides with any enemies  
   
-- Enemies can:
-  * walk left and right
-  * fall
-  * die
+- Enemies can:  
+  * walk left and right  
+  * fall  
+  * die  
   
-- Switches can target:
-  * deadly tiles, when toggled it will change them into destructible tiles
-  * indestructible tiles, when toggled it will change them into jumping tiles
-  * destructible tile: when toggled, it will blow them up
+- Switches can target:  
+  * deadly tiles, when toggled it will change them into destructible tiles  
+  * indestructible tiles, when toggled it will change them into jumping tiles  
+  * destructible tile: when toggled, it will blow them up  
   
-Code features:
---------------
+Code features:  
+--------------  
 - Constants.h is imported by every source file and contains game parameters and 
-  other constant values
+  other constant values  
 - Helpers.h is imported by Constants.h so is also available from every source file 
   and contains old-C style helper functions and structs that are required by 
-  multiple files in the project
+  multiple files in the project  
 - World.loadLevel and Level.createTilesLayer allow for a callback to be passed as 
   parameter which is called during the loading of game objects to keep the caller 
-  informed about the progress
-- CLog() can be used to log method calls (see Helpers.h for extensive explanation)
+  informed about the progress  
+- CLog() can be used to log method calls (see Helpers.h for extensive explanation)  
 - Setting DEBUG_TILE_DETECTION to 1 will enable a special debug level and some 
   alternative methods that will visualize tile detection
 

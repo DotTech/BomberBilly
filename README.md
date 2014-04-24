@@ -1,17 +1,17 @@
 # BomberBilly - 2D puzzle platform game for iOS  
 
-## Project started on February 22nd, 2011  
-## Status: in development, unreleased  
+**Project started on February 22nd, 2011**  
+**Status: unreleased, development on hold**  
 
 ### Created by Ruud van Falier  
 
-### E-mail: ruud.vanfalier@gmail.com  
-### Twitter: BrruuD  
-### LinkedIn: http://nl.linkedin.com/in/ruudvanfalier  
+E-mail: ruud.vanfalier@gmail.com  
+Twitter: BrruuD  
+LinkedIn: http://nl.linkedin.com/in/ruudvanfalier  
  
-### Gameplay Demo: https://www.youtube.com/watch?v=ZyyTdjWcgM0  
+**Gameplay Demo:** https://www.youtube.com/watch?v=ZyyTdjWcgM0  
 
-# TODO's:
+### TODO's:
 - [new] Slow scrolling background image  
 - [bug] Loading screen is not showing at initial load, only after level restarts  
 - [bug] Enemy tile detection seems a little off when they move to the left.  
@@ -26,17 +26,15 @@
         Sharing option for scores
 
 
-====================================================================================
 
-# Version: 0.0.4 (2012-09-25)
+### Version: 0.0.4 (2012-09-25)
 
 *Added features:*  
 - Added support for scaling (Retina displays)
 - Version numbering revised
 
 
-====================================================================================
-# Version: 0.0.3 (2011-03-28)
+### Version: 0.0.3 (2011-03-28)
 
 *Added features:*  
 - When tiles are being targeted by switches, after toggling, the tile will start to
@@ -56,16 +54,14 @@
   solve the tile detection problem for them
 
 
-====================================================================================
-# Version: 0.0.2 (2011-03-25)
+### Version: 0.0.2 (2011-03-25)
 
 *Added features:*  
 - Tutorial mode fully implemented
 - "Loading..." screen partly implemented (on first load it does not show yet…)
 
 
-====================================================================================
-# Version: 0.0.1 (2011-03-20)
+### Version: 0.0.1 (2011-03-20)
 
 I've decided to keep track of changes for each version.
 Because this is the first release notes version, it will list all (or at least most

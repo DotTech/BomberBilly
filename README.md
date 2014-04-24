@@ -8,16 +8,16 @@
 This was my first attempt at an iOS game in the beginning of 2011 and also the first time I used Objective-C and XCode.  
 The project was build from scratch without the use of an existing game engine.  
 Although it was a lot of fun building it, I don't really see a future for the project in its current state.  
-Its state being a fully working game engine, some demo levels but still a lot of work left to turn it into a releasable game.  
+Its state being a fully working game engine with quite a few features and some demo levels but still a lot of work left to turn it into a releasable game.  
 
 Should work from iOS 4.3 up until the latest version.  
+
+**Check out the game play demo:** https://www.youtube.com/watch?v=ZyyTdjWcgM0  
 
 **Created by Ruud van Falier**  
 E-mail: ruud.vanfalier@gmail.com  
 Twitter: BrruuD  
 LinkedIn: http://nl.linkedin.com/in/ruudvanfalier  
- 
-**Gameplay Demo:** https://www.youtube.com/watch?v=ZyyTdjWcgM0  
 
 ### TODO's:
 - [new] Slow scrolling background image  

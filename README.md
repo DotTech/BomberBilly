@@ -35,20 +35,20 @@ x [new] New tile: partly penetrable tile, which allows you to walk through from
 
 
 ====================================================================================
-Version:    0.0.4
-Date:       2012-09-25
+# Version: 0.0.4
+## Date: 2012-09-25
 
-Added features:
+### Added features:
 ---------------
 - Added support for scaling (Retina displays)
 - Version numbering revised
 
 
 ====================================================================================
-Version:    0.0.3
-Date:       2011-03-28
+# Version: 0.0.3
+## Date: 2011-03-28
 
-Added features:
+### Added features:
 ---------------
 - When tiles are being targeted by switches, after toggling, the tile will start to
   blink and then fade out before letting the new tile fade in.
@@ -68,25 +68,25 @@ Added features:
 
 
 ====================================================================================
-Version:    0.0.2
-Date:       2011-03-25
+# Version: 0.0.2
+## Date: 2011-03-25
 
-Added features:
+### Added features:
 ---------------
 - Tutorial mode fully implemented
 - "Loading..." screen partly implemented (on first load it does not show yet…)
 
 
 ====================================================================================
-Version:    0.0.1
-Date:       2011-03-20
+# Version: 0.0.1
+## Date: 2011-03-20
 
 I've decided to keep track of changes for each version.
 Because this is the first release notes version, it will list all (or at least most
 currently finished features.
 For future release notes only the changes will be documented.
 
-Game mechanics and features:
+### Game mechanics and features:
 -----------------------------
 - GameStateMain is the state that hold the actual game code  
   * it manages the World instance  
@@ -137,7 +137,7 @@ Game mechanics and features:
   * indestructible tiles, when toggled it will change them into jumping tiles  
   * destructible tile: when toggled, it will blow them up  
   
-Code features:  
+### Code features:  
 --------------  
 - Constants.h is imported by every source file and contains game parameters and 
   other constant values  

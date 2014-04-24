@@ -1,10 +1,18 @@
-# BomberBilly - 2D puzzle platform game for iOS  
+# BomberBilly - 2D puzzle platformer for iOS  
 
 **Project started on February 22nd, 2011**  
 **Status: unreleased, development on hold**  
 
-### Created by Ruud van Falier  
+------------------
 
+This was my first attempt at an iOS game in the beginning of 2011 and also the first time I used Objective-C and XCode.  
+The project was build from scratch without the use of an existing game engine.  
+Although it was a lot of fun building it, I don't really see a future for the project in its current state.  
+Its state being a fully working game engine, some demo levels but still a lot of work left to turn it into a releasable game.  
+
+Should work from iOS 4.3 up until the latest version.  
+
+**Created by Ruud van Falier**  
 E-mail: ruud.vanfalier@gmail.com  
 Twitter: BrruuD  
 LinkedIn: http://nl.linkedin.com/in/ruudvanfalier  
